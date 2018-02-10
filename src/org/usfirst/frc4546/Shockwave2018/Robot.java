@@ -8,6 +8,7 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
+// 2/8 GFB, HPD - added a few limit switches and worked on potentiometer values
 
 package org.usfirst.frc4546.Shockwave2018;
 
@@ -45,8 +46,8 @@ import org.usfirst.frc4546.Shockwave2018.subsystems.*;
  */
 public class Robot extends TimedRobot {
 
-	private static final int kMotorPort5 = 5;
-	private SpeedController speedController5 = RobotMap.controlSubSpeedController5;
+	private static final int kMotorPort3 = 3;
+	private SpeedController speedController3 = RobotMap.controlSubSpeedController3;
 	private static final int kMotorPort6 = 6;
 	private SpeedController speedController6 = RobotMap.controlSubSpeedController6;
 	
@@ -76,7 +77,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putData(pDPSub);
         controlSub = new ControlSub();
         
-        speedController5 = new VictorSP(kMotorPort5);
+        speedController3 = new VictorSP(kMotorPort3);
         speedController6 = new VictorSP(kMotorPort6);
         
         
@@ -213,17 +214,17 @@ public class Robot extends TimedRobot {
 		
 		
 		if(ai.getValue() > 3000){
-			speedController5.set(0.5);
-			speedController6.set(0.5);
+			speedController3.set(0.5);
+
 		}
 		
 		if(ai.getValue() < 2950 && ai.getValue() > 1500){
-			speedController5.set(0.1);
-			speedController6.set(0.1);
+			speedController3.set(0.1);
+		
 		}
 		if(ai.getValue() > 1000){
-			speedController5.set(0);
-			speedController6.set(0);
+			speedController3.set(0);
+		
 		}
 		
 		
