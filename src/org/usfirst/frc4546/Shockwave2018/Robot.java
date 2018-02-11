@@ -150,6 +150,9 @@ public class Robot extends TimedRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+    
+       
+        
     }
 
     /**
@@ -228,35 +231,10 @@ public class Robot extends TimedRobot {
 		}
 		
 		
+		SmartDashboard.putNumber("Analog Value", example2Analog.getValue());
+		SmartDashboard.putNumber("Analog Voltage", example2Analog.getVoltage());
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+					
 	}
 	
 		Potentiometer pot; {
