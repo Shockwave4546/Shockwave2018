@@ -37,24 +37,7 @@ public class Robot extends TimedRobot {
     private static final int kPDP = 0;
     private PowerDistributionPanel m_PDP;
     
-    private static final int kMotorPort1 = 1;
-	private SpeedController speedController1; 
-	private static final int kMotorPort2 = 2; //victor spx
-	private SpeedController speedController2;
-	private static final int kMotorPort3 = 3;
-	private SpeedController speedController3;
-	private static final int kMotorPort4 = 4;
-	private SpeedController speedController4;
-	private static final int kMotorPort5 = 5;
-	private SpeedController speedController5;
-	private static final int kMotorPort6 = 6;
-	private SpeedController speedController6; 
-	private static final int kMotorPort7 = 7; //victor spx
-	private SpeedController speedController7;
-	private static final int kMotorPort8 = 8;
-	private SpeedController speedController8;
-	private static final int kMotorPort9 = 9;
-	private SpeedController speedController9;
+
     
     
   
