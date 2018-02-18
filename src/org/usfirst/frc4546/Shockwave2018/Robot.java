@@ -125,6 +125,8 @@ public class Robot extends TimedRobot {
 	private double delay8 = 0.8;
 	private double delay9 = 0.9;
 	private double delay0 = 1;
+	
+	private double Turn = .2;
 	//private static final int kMotorPort9 = 9;
 
 	//private SpeedController speedController9;
@@ -161,7 +163,7 @@ public class Robot extends TimedRobot {
 
 
     	SmartDashboard.putData("Auto mode", chooser);
-        new Thread(() -> {
+        /**new Thread(() -> {
             UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
             camera.setResolution(640, 480);
             
@@ -177,7 +179,7 @@ public class Robot extends TimedRobot {
                 outputStream.putFrame(output);
             }
         }).start();
-
+*/
     	SmartDashboard.putNumber("Total", m_PDP.getTotalPower() * Timer.getMatchTime());
     	
     	FrontLeft = new Talon(kMotorPort1);
@@ -573,20 +575,21 @@ public class Robot extends TimedRobot {
 	    	Button = Joystick.getTop();
 	    
 	    	if(Button==false && Trigger==false){
-	        	IntakeLeft.set(0);
 	        	FinalIntakeLeft = 0;
-	        	IntakeRight.set(0);
+	        	IntakeLeft.set(FinalIntakeLeft);
 	        	FinalIntakeRight = 0;
+	        	IntakeRight.set(FinalIntakeRight);
 	        }else if(Button==true && Trigger==false){
-	        	IntakeLeft.set(IntakeLeftPos);
 	        	FinalIntakeLeft = (IntakeLeftPos);
-	        	IntakeRight.set(-IntakeRightNeg);
+	        	IntakeLeft.set(FinalIntakeLeft);
 	        	FinalIntakeRight = (-IntakeRightNeg);
+	        	IntakeRight.set(FinalIntakeRight);
 	        }else if(Button==false && Trigger==true){
-	        	IntakeLeft.set(-IntakeLeftNeg);
 	        	FinalIntakeLeft = (-IntakeLeftNeg);
-	        	IntakeRight.set(IntakeRightPos);
+	        	IntakeLeft.set(FinalIntakeLeft);
 	        	FinalIntakeRight = (IntakeRightPos);
+	        	IntakeRight.set(FinalIntakeRight);
+
 	        }//intake motors
 	        
 	        
@@ -594,22 +597,22 @@ public class Robot extends TimedRobot {
 	        	SlideMotor.set(0);
 	        	FinalSlide = 0;
 	        }else if(LeftY2<.1 && LeftY2<=-.1){
-	        	SlideMotor.set(LeftY2*SlideNeg);
 	        	FinalSlide = (LeftY2*SlideNeg);
+	        	SlideMotor.set(FinalSlide);
 	        }else if(LeftY2>=.1 && LeftY2>-.1){
-	        	SlideMotor.set(LeftY2*SlidePos);
 	        	FinalSlide = (LeftY2*SlidePos);
+	        	SlideMotor.set(FinalSlide);
 	        }//Slide motor
 	        
 	        if(RightY2<.1 && RightY2>-.1){
 	        	ArmMotor.set(0);
 	        	FinalArm = 0;
 	        }else if(RightY2<.1 && RightY2<=-.1){
-	        	ArmMotor.set(RightY2*ArmNeg);
 	        	FinalArm = (RightY2*ArmNeg);
+	        	ArmMotor.set(FinalArm);
 	        }else if(RightY2>=.1 && RightY2>-.1){
-	        	ArmMotor.set(RightY2*ArmPos);
 	        	FinalArm = (RightY2*ArmPos);
+	        	ArmMotor.set(FinalArm);
 	        }//Arm motor
 	        
 	        
@@ -629,6 +632,20 @@ public class Robot extends TimedRobot {
 	        	
 	        }else if(YAxis>.15 && Twist<=.3 && Twist>=-.3){
 
+	        	FinalFrontLeft = ((YAxis*FrontLeftPos)*Slider);
+	        	FrontLeft.set(FinalFrontLeft);
+	        	
+	        	FinalBackLeft = ((YAxis*BackLeftPos)*Slider);
+	        	BackLeft.set(FinalBackLeft);
+	        	
+	        	FinalFrontRight = ((YAxis*FrontRightPos)*Slider);
+	        	FrontRight.set(FinalFrontRight);
+	        	
+	        	FinalBackRight = ((YAxis*BackRightPos)*Slider);
+	        	BackRight.set(FinalBackRight);
+	        	//Motor Back
+	        	
+	        }else if(YAxis<-.15 && Twist<=.3 && Twist>=-.3){
 	        	FinalFrontLeft = ((YAxis*FrontLeftNeg)*Slider);
 	        	FrontLeft.set(FinalFrontLeft);
 	        	
@@ -640,50 +657,35 @@ public class Robot extends TimedRobot {
 	        	
 	        	FinalBackRight = ((YAxis*BackRightNeg)*Slider);
 	        	BackRight.set(FinalBackRight);
-	        	//Motor Back
-	        	
-	        }else if(YAxis<-.15 && Twist<=.3 && Twist>=-.3){
-	        	FinalFrontLeft = ((YAxis*FrontLeftPos)*Slider);
-	        	FrontLeft.set(FinalFrontLeft);
-	        	
-
-	        	FinalBackLeft = ((YAxis*BackLeftPos)*Slider);
-	        	BackLeft.set(FinalBackLeft);
-	        	
-	        	FinalFrontRight = ((YAxis*FrontRightPos)*Slider);
-	        	FrontRight.set(FinalFrontRight);
-	        	
-	        	FinalBackRight = ((YAxis*BackRightPos)*Slider);
-	        	BackRight.set(FinalBackRight);
 	        	//Motor Forward
 	        	
-	        }else if(YAxis<-.15 && Twist<.3){
+	        }else if(YAxis<-.15 && Twist>.3){
+	        	FinalFrontLeft = (((YAxis*FrontLeftNeg)*Slider)*(1-Twist+Turn));
+	        	FrontLeft.set(FinalFrontLeft);
+	        	
+	        	FinalBackLeft = (((YAxis*BackLeftNeg)*Slider)*(1-Twist+Turn));
+	        	BackLeft.set(FinalBackLeft);
+	        	
+	        	FinalFrontRight = ((YAxis*FrontLeftNeg)*Slider);
+	        	FrontRight.set(FinalFrontRight);
+	        	
+	        	FinalBackRight = ((YAxis*BackLeftNeg)*Slider);
+	        	BackRight.set(FinalBackRight);
+	        	//Forward Right
+	        	
+	        }else if(YAxis<-.15 && Twist<-.3){
 	        	FinalFrontLeft = ((YAxis*FrontLeftPos)*Slider);
 	        	FrontLeft.set(FinalFrontLeft);
 	        	
 	        	FinalBackLeft = ((YAxis*BackLeftPos)*Slider);
 	        	BackLeft.set(FinalBackLeft);
 	        	
-	        	FinalFrontRight = (((YAxis*FrontLeftPos)*Slider)*(Twist*FrontLeftPos));
+	        	FinalFrontRight = (((YAxis*FrontRightPos)*Slider)*(1+Twist+Turn));
 	        	FrontRight.set(FinalFrontRight);
 	        	
-	        	FinalBackRight = (((YAxis*BackLeftPos)*Slider)*(Twist*BackLeftPos));
+	        	FinalBackRight = (((YAxis*BackRightPos)*Slider)*(1+Twist+Turn));
 	        	BackRight.set(FinalBackRight);
-	        	//Backward Right
-	        	
-	        }else if(YAxis<-.15 && Twist>-.3){
-	        	FinalFrontLeft = (((YAxis*FrontLeftPos)*Slider)*(Twist*-FrontLeftPos));
-	        	FrontLeft.set(FinalFrontLeft);
-	        	
-	        	FinalBackLeft = (((YAxis*BackLeftPos)*Slider)*(Twist*-FrontLeftPos));
-	        	BackLeft.set(FinalBackLeft);
-	        	
-	        	FinalFrontRight = ((YAxis*FrontRightPos)*Slider);
-	        	FrontRight.set(FinalFrontRight);
-	        	
-	        	FinalBackRight = ((YAxis*BackRightPos)*Slider);
-	        	BackRight.set(FinalBackRight);
-	        	//Backward Left
+	        	//Forward Left
 	        	
 	        }else if(YAxis>.15 && Twist>.3){
 	        	FinalFrontLeft = ((YAxis*FrontLeftPos)*Slider);
@@ -692,18 +694,18 @@ public class Robot extends TimedRobot {
 	        	FinalBackLeft = ((YAxis*BackLeftPos)*Slider);
 	        	BackLeft.set(FinalBackLeft);
 	        	
-	        	FinalFrontRight = (((YAxis*FrontLeftPos)*Slider)*(Twist*-FrontLeftPos));
+	        	FinalFrontRight = (((YAxis*FrontLeftPos)*Slider)*(1-Twist+Turn));
 	        	FrontRight.set(FinalFrontRight);
 	        	
-	        	FinalBackRight = (((YAxis*BackLeftPos)*Slider)*(Twist*-BackLeftPos));
+	        	FinalBackRight = (((YAxis*BackLeftPos)*Slider)*(1-Twist+Turn));
 	        	BackRight.set(FinalBackRight);
 	        	//Back Right
 	        	
 	        }else if(YAxis>.15 && Twist<-.3){ 
-	        	FinalFrontLeft = (((YAxis*FrontLeftPos)*Slider)*(Twist*FrontLeftPos));
+	        	FinalFrontLeft = (((YAxis*FrontLeftPos)*Slider)*(1+Twist+Turn));
 	        	FrontLeft.set(FinalFrontLeft);
 	        	
-	        	FinalBackLeft = (((YAxis*BackLeftPos)*Slider)*(Twist*FrontLeftPos));
+	        	FinalBackLeft = (((YAxis*BackLeftPos)*Slider)*(1+Twist+Turn));
 	        	BackLeft.set(FinalBackLeft);
 	        	
 	        	FinalFrontRight = ((YAxis*FrontRightPos)*Slider);
