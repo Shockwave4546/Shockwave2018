@@ -126,8 +126,20 @@ public class Robot extends TimedRobot {
 	private double delay0 = 1;
 	//private static final int kMotorPort9 = 9;
 	//private SpeedController speedController9;
-
-
+	
+	//Slider Variables
+	double FLSlideVal;
+	double FRSlideVal;
+	double BLSlideVal;
+	double BRSlideVal;
+	double ILSlideVal;
+	double IRSlideVal;
+	double AMSlideVal;
+	double SMSlideVal;
+	
+	
+	//private static final int kMotorPort9 = 9;
+	//private SpeedController speedController9;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -276,6 +288,58 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
+        
+      //Inserts a blank textbox with true or false value (set to false first from Iterative function)
+      		SmartDashboard.putBoolean("ToggleSliderControl",true);
+      		
+      //Inserts Slider for Each Individual Motor (Simulates the Joystick)
+    		SmartDashboard.putNumber("FrontL_Slider",0);
+    		SmartDashboard.putNumber("FrontR_Slider",0);
+    		SmartDashboard.putNumber("BackL_Slider",0);
+    		SmartDashboard.putNumber("BackR_Slider",0);
+    		SmartDashboard.putNumber("IntakeL_Slider",0);
+    		SmartDashboard.putNumber("IntakeR_Slider",0);
+    		SmartDashboard.putNumber("Arm_Slider",0);
+    		SmartDashboard.putNumber("SlideMotor_Slider",0);
+    		
+    	//Inserts Scaler Modifiers for Each Motor and their +/- on Shuffleboard (Number Input)
+    		SmartDashboard.putNumber("+FL_Scale",FrontLeftPos);
+    		SmartDashboard.putNumber("-FL_Scale",FrontLeftNeg);
+    		SmartDashboard.putNumber("+FR_Scale",FrontRightPos);
+    		SmartDashboard.putNumber("-FR_Scale",FrontRightNeg);
+    		SmartDashboard.putNumber("+BL_Scale",BackLeftPos);
+    		SmartDashboard.putNumber("-BL_Scale",BackLeftNeg);
+    		SmartDashboard.putNumber("+BR_Scale",BackRightPos);
+    		SmartDashboard.putNumber("-BR_Scale",BackRightNeg);
+    		
+    		SmartDashboard.putNumber("+IL_Scale",IntakeLeftPos);
+    		SmartDashboard.putNumber("-IL_Scale",IntakeLeftNeg);
+    		SmartDashboard.putNumber("+IR_Scale",IntakeRightPos);
+    		SmartDashboard.putNumber("-IR_Scale",IntakeRightNeg);
+    		SmartDashboard.putNumber("+AM_Scale",ArmPos);
+    		SmartDashboard.putNumber("-AM_Scale",ArmNeg);
+    		SmartDashboard.putNumber("+SM_Scale",SlidePos);
+    		SmartDashboard.putNumber("-SM_Scale",SlideNeg);
+    		
+    	//Inserts Final Motor Value from (Slider/Joystick * Scaler)
+  			SmartDashboard.putNumber("FLMotor",0);
+  			SmartDashboard.putNumber("FRMotor",0);
+  			SmartDashboard.putNumber("BLMotor",0);
+  			SmartDashboard.putNumber("BRMotor",0);
+  			
+  			SmartDashboard.putNumber("ILMotor",0);
+  			SmartDashboard.putNumber("IRMotor",0);
+  			SmartDashboard.putNumber("AMMotor",0);
+  			SmartDashboard.putNumber("SMMotor",0);
+   
+    		
+    	//Intake Motor Direction Indicator is Inserted.
+    		SmartDashboard.putString("LeftIntakeDirection", "Neutral");
+    		SmartDashboard.putString("RightIntakeDirection", "Neutral");
+    		
+    	//Drive Direction Indicator is Inserted.
+    		SmartDashboard.putString("Main Direction", "Idle");
+    		SmartDashboard.putString("Turning", "None");
     }
 
     /**
@@ -284,145 +348,299 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-    	LeftY2 = Xbox.getY(Hand.kLeft);
-    	RightY2 = Xbox.getY(Hand.kRight);
-    	YAxis = Joystick.getY();
-    	Twist = Joystick.getTwist();
-    	Slider = (-(Joystick.getThrottle()-1)/2);
-    	Trigger = Joystick.getTrigger();
-    	Button = Joystick.getTop();
     
-    	if(Button==false && Trigger==false){
-        	IntakeLeft.set(0);
-        	FinalIntakeLeft = 0;
-        	IntakeRight.set(0);
-        	FinalIntakeRight = 0;
-        }else if(Button==true && Trigger==false){
-        	IntakeLeft.set(IntakeLeftPos);
-        	FinalIntakeLeft = (IntakeLeftPos);
-        	IntakeRight.set(-IntakeRightNeg);
-        	FinalIntakeRight = (-IntakeRightNeg);
-        }else if(Button==false && Trigger==true){
-        	IntakeLeft.set(-IntakeLeftNeg);
-        	FinalIntakeLeft = (-IntakeLeftNeg);
-        	IntakeRight.set(IntakeRightPos);
-        	FinalIntakeRight = (IntakeRightPos);
-        }//intake motors
         
+        	LeftY2 = Xbox.getY(Hand.kLeft);
         
-        if(LeftY2<.1 && LeftY2>-.1){
-        	SlideMotor.set(0);
-        	FinalSlide = 0;
-        }else if(LeftY2<.1 && LeftY2<=-.1){
-        	SlideMotor.set(LeftY2*SlideNeg);
-        	FinalSlide = (LeftY2*SlideNeg);
-        }else if(LeftY2>=.1 && LeftY2>-.1){
-        	SlideMotor.set(LeftY2*SlidePos);
-        	FinalSlide = (LeftY2*SlidePos);
-        }//Slide motor
-        
-        if(RightY2<.1 && RightY2>-.1){
-        	ArmMotor.set(0);
-        	FinalArm = 0;
-        }else if(RightY2<.1 && RightY2<=-.1){
-        	ArmMotor.set(RightY2*ArmNeg);
-        	FinalArm = (RightY2*ArmNeg);
-        }else if(RightY2>=.1 && RightY2>-.1){
-        	ArmMotor.set(RightY2*ArmPos);
-        	FinalArm = (RightY2*ArmPos);
-        }//Arm motor
-        
-        
-        if(YAxis<=.1 && YAxis>=-.1 && Twist<=.1 && Twist>=-.1){
-        	FrontLeft.set(0);
-        	FinalFrontLeft = (0);
-        	BackLeft.set(0);
-        	FinalBackLeft = (0);
-        	FrontRight.set(0);
-        	FinalFrontRight = (0);
-        	BackRight.set(0);
-        	FinalFrontRight = (0);
-        	//Idle
-        }else if(YAxis>.1 && Twist<=.1 && Twist>=-.1){
-        	FrontLeft.set((YAxis*FrontLeftNeg)*Slider);
-        	FinalFrontLeft = ((YAxis*FrontLeftNeg)*Slider);
-        	BackLeft.set((YAxis*BackLeftNeg)*Slider);
-        	FinalBackLeft = ((YAxis*BackLeftNeg)*Slider);
-        	FrontRight.set((YAxis*FrontRightNeg)*Slider);
-        	FinalFrontRight = ((YAxis*FrontRightNeg)*Slider);
-        	BackRight.set((YAxis*BackRightNeg)*Slider);
-        	FinalFrontRight = ((YAxis*BackRightNeg)*Slider);
-        	//Motor Back
-        }else if(YAxis<-.1 && Twist<=.1 && Twist>=-.1){
-        	FrontLeft.set((YAxis*FrontLeftPos)*Slider);
-        	FinalFrontLeft = ((YAxis*FrontLeftPos)*Slider);
-        	BackLeft.set((YAxis*BackLeftPos)*Slider);
-        	FinalBackLeft = ((YAxis*BackLeftPos)*Slider);
-        	FrontRight.set((YAxis*FrontRightPos)*Slider);
-        	FinalFrontRight = ((YAxis*FrontRightPos)*Slider);
-        	BackRight.set((YAxis*BackRightPos)*Slider);
-        	FinalFrontRight = ((YAxis*BackRightPos)*Slider);
-        	//Motor Forward
-        }else if(YAxis<-.1 && Twist>.1){
-        	FrontLeft.set((YAxis*FrontLeftPos)*Slider);
-        	FinalFrontLeft = ((YAxis*FrontLeftPos)*Slider);
-        	BackLeft.set((YAxis*BackLeftPos)*Slider);
-        	FinalBackLeft = ((YAxis*BackLeftPos)*Slider);
-        	FrontRight.set(((YAxis*FrontLeftPos)*Slider)*(Twist*FrontLeftPos));
-        	FinalFrontRight = (((YAxis*FrontLeftPos)*Slider)*(Twist*FrontLeftPos));
-        	BackRight.set(((YAxis*BackLeftPos)*Slider)*(Twist*BackLeftPos));
-        	FinalFrontRight = (((YAxis*BackLeftPos)*Slider)*(Twist*BackLeftPos));
-        	//Forward Right
-        }else if(YAxis<-.1 && Twist<-.1){
-        	FrontLeft.set(((YAxis*FrontLeftPos)*Slider)*(Twist*-FrontLeftPos));
-        	FinalFrontLeft = (((YAxis*FrontLeftPos)*Slider)*(Twist*-FrontLeftPos));
-        	BackLeft.set(((YAxis*BackLeftPos)*Slider)*(Twist*-FrontLeftPos));
-        	FinalBackLeft = (((YAxis*BackLeftPos)*Slider)*(Twist*-FrontLeftPos));
-        	FrontRight.set((YAxis*FrontRightPos)*Slider);
-        	FinalFrontRight = ((YAxis*FrontRightPos)*Slider);
-        	BackRight.set((YAxis*BackRightPos)*Slider);
-        	FinalFrontRight = ((YAxis*BackRightPos)*Slider);
-        	//Forward Left
-        }else if(YAxis>.1 && Twist>.1){
-        	FrontLeft.set((YAxis*FrontLeftPos)*Slider);
-        	FinalFrontLeft = ((YAxis*FrontLeftPos)*Slider);
-        	BackLeft.set((YAxis*BackLeftPos)*Slider);
-        	FinalBackLeft = ((YAxis*BackLeftPos)*Slider);
-        	FrontRight.set(((YAxis*FrontLeftPos)*Slider)*(Twist*FrontLeftPos));
-        	FinalFrontRight = (((YAxis*FrontLeftPos)*Slider)*(Twist*FrontLeftPos));
-        	BackRight.set(((YAxis*BackLeftPos)*Slider)*(Twist*BackLeftPos));
-        	FinalFrontRight = (((YAxis*BackLeftPos)*Slider)*(Twist*BackLeftPos));
-        	//Back Right
-        }else if(YAxis>.1 && Twist<-.1){
-        	FrontLeft.set(((YAxis*FrontLeftPos)*Slider)*(Twist*-FrontLeftPos));
-        	FinalFrontLeft = (((YAxis*FrontLeftPos)*Slider)*(Twist*-FrontLeftPos));
-        	BackLeft.set(((YAxis*BackLeftPos)*Slider)*(Twist*-FrontLeftPos));
-        	FinalBackLeft = (((YAxis*BackLeftPos)*Slider)*(Twist*-FrontLeftPos));
-        	FrontRight.set((YAxis*FrontRightPos)*Slider);
-        	FinalFrontRight = ((YAxis*FrontRightPos)*Slider);
-        	BackRight.set((YAxis*BackRightPos)*Slider);
-        	FinalFrontRight = ((YAxis*BackRightPos)*Slider);
-        	//Back Left
-        }else if(YAxis<=.1 && YAxis>=-.1 && Twist<-.1){
-        	FrontLeft.set((Twist*FrontLeftNeg)*Slider);
-        	FinalFrontLeft = ((Twist*FrontLeftNeg)*Slider);
-        	BackLeft.set((Twist*BackLeftNeg)*Slider);
-        	FinalBackLeft = ((Twist*BackLeftNeg)*Slider);
-        	FrontRight.set((Twist*FrontRightPos)*-Slider);
-        	FinalFrontRight = ((Twist*FrontRightPos)*-Slider);
-        	BackRight.set((Twist*BackRightPos)*-Slider);
-        	FinalFrontRight = ((Twist*BackRightPos)*-Slider);
-        	//Spin Left
-        }else if(YAxis<=.1 && YAxis>=-.1 && Twist>.1){
-        	FrontLeft.set((Twist*FrontLeftPos)*Slider);
-        	FinalFrontLeft = ((Twist*FrontLeftPos)*Slider);
-        	BackLeft.set((Twist*BackLeftPos)*Slider);
-        	FinalBackLeft = ((Twist*BackLeftPos)*Slider);
-        	FrontRight.set((Twist*FrontRightNeg)*-Slider);
-        	FinalFrontRight = ((Twist*FrontRightNeg)*-Slider);
-        	BackRight.set((Twist*BackRightNeg)*-Slider);
-        	FinalFrontRight = ((Twist*BackRightNeg)*-Slider);
-        	//Spin Right
-        }      
+        	//Toggle Button for Boolean on ShuffleBoard
+      		boolean ToggleSliderValue = SmartDashboard.getBoolean("ToggleSliderControl", true);
+      		
+      		
+      		
+ //ShuffleBoard Control Code is below this line.     	
+      	if(ToggleSliderValue == false) {
+      		// Slider for the Left Motor and Right Motor (Gets value from slider)
+      			FLSlideVal = SmartDashboard.getNumber("FrontL_Slider",0);
+      			FRSlideVal = SmartDashboard.getNumber("FrontR_Slider",0);
+      			BLSlideVal = SmartDashboard.getNumber("BackL_Slider",0);
+      			BRSlideVal = SmartDashboard.getNumber("BackR_Slider",0);
+      			
+      			ILSlideVal = SmartDashboard.getNumber("IntakeL_Slider",0);
+      			IRSlideVal = SmartDashboard.getNumber("IntakeR_Slider",0);
+      			AMSlideVal = SmartDashboard.getNumber("Arm_Slider",0);
+      			SMSlideVal = SmartDashboard.getNumber("SlideMotor_Slider",0);
+      			
+      		// Retrieves Scaler set for Drive Train Motors on ShuffleBoard
+      			FrontLeftPos = SmartDashboard.getNumber("+FL_Scale",FrontLeftPos);
+        		FrontLeftNeg = SmartDashboard.getNumber("-FL_Scale",FrontLeftNeg);
+        		FrontRightPos = SmartDashboard.getNumber("+FR_Scale",FrontRightPos);
+        		FrontRightNeg = SmartDashboard.getNumber("-FR_Scale",FrontRightNeg);
+        		BackLeftPos = SmartDashboard.getNumber("+BL_Scale",BackLeftPos);
+        		BackLeftNeg = SmartDashboard.getNumber("-BL_Scale",BackLeftNeg);
+        		BackRightPos = SmartDashboard.getNumber("+BR_Scale",BackRightPos);
+        		BackRightNeg = SmartDashboard.getNumber("-BR_Scale",BackRightNeg);
+     		
+        	//Retrieves Intake (Left & Right), Arm Motor, Slide Motor Scalers from ShuffleBoard.
+        		IntakeLeftPos = SmartDashboard.getNumber("+IL_Scale",IntakeLeftPos);
+        		IntakeLeftNeg = SmartDashboard.getNumber("-IL_Scale",IntakeLeftNeg);
+        		IntakeRightPos = SmartDashboard.getNumber("+IR_Scale",IntakeRightPos);
+        		IntakeRightNeg = SmartDashboard.getNumber("-IR_Scale",IntakeRightNeg);
+        		ArmPos = SmartDashboard.getNumber("+AM_Scale",ArmPos);
+        		ArmNeg = SmartDashboard.getNumber("-AM_Scale",ArmNeg);
+        		SlidePos = SmartDashboard.getNumber("+SM_Scale",SlidePos);
+        		SlideNeg = SmartDashboard.getNumber("-SM_Scale",SlideNeg);
+        		
+        		
+      		//(Front Left Motor Final Value) Displayed on ShuffleBoard Depending on Scaler
+      			if(FLSlideVal > 0){
+      				FinalFrontLeft = FLSlideVal*FrontLeftPos;
+      			}else if(FLSlideVal < 0){
+      				FinalFrontLeft = FLSlideVal*FrontLeftNeg;
+      			}
+     		
+      		//(Front Right Motor Final Value) Displayed on ShuffleBoard Depending on Scaler
+      			if(FRSlideVal > 0){
+      				FinalFrontRight = FRSlideVal*FrontRightPos;
+      			}else if(FRSlideVal < 0){
+      				FinalFrontRight = FRSlideVal*FrontRightNeg;
+      			}
+			
+      		//(Back Left Motor Final Value) Displayed on ShuffleBoard Depending on Scaler
+      			if(BLSlideVal > 0){
+      				FinalBackLeft = BLSlideVal*BackLeftPos;
+      			}else if(BLSlideVal < 0){
+      				FinalBackLeft = BLSlideVal*BackLeftNeg;
+      			}
+			
+      		//(Back Right Motor Final Value) Displayed on ShuffleBoard Depending on Scaler
+      			if(BRSlideVal > 0){
+      				FinalBackRight = BRSlideVal*BackRightPos;
+      			}else if(BRSlideVal < 0){
+      				FinalBackRight = BRSlideVal*BackRightNeg;
+      			}
+      			
+      		//(Intake Left Motor Final Value) Displayed on ShuffleBoard Depending on Scaler
+      			if(ILSlideVal > 0){
+      				FinalIntakeLeft = ILSlideVal*IntakeLeftPos;
+      			}else if(ILSlideVal < 0){
+      				FinalIntakeLeft = ILSlideVal*IntakeLeftNeg;
+      			}
+      			
+      		//(Intake Right Motor Final Value) Displayed on ShuffleBoard Depending on Scaler
+      			if(IRSlideVal > 0){
+      				FinalIntakeRight = IRSlideVal*IntakeRightPos;
+      			}else if(IRSlideVal < 0){
+      				FinalIntakeRight = IRSlideVal*IntakeRightNeg;
+      			}
+      			
+      		//(Arm Motor Final Value) Displayed on ShuffleBoard Depending on Scaler
+      			if(AMSlideVal > 0){
+      				FinalArm = AMSlideVal*ArmPos;
+      			}else if(ILSlideVal < 0){
+      				FinalArm = AMSlideVal*ArmNeg;
+      			}
+      			
+      		//(Slide Motor Final Value) Displayed on ShuffleBoard Depending on Scaler
+      			if(SMSlideVal > 0){
+      				FinalSlide = SMSlideVal*SlidePos;
+      			}else if(ILSlideVal < 0){
+      				FinalSlide = SMSlideVal*SlideNeg;
+      			}
+      			
+      			
+      		//Final Motor Value Output Displayed on Shuffleboard
+      			SmartDashboard.putNumber("FLMotor",FinalFrontLeft);
+      			SmartDashboard.putNumber("FRMotor",FinalFrontRight);
+      			SmartDashboard.putNumber("BLMotor",FinalBackLeft);
+      			SmartDashboard.putNumber("BRMotor",FinalBackRight);
+      			
+      			SmartDashboard.putNumber("ILMotor",FinalIntakeLeft);
+      			SmartDashboard.putNumber("IRMotor",FinalIntakeRight);
+      			SmartDashboard.putNumber("AMMotor",FinalArm);
+      			SmartDashboard.putNumber("SMMotor",FinalSlide);
+      	} 
+      	
+      	
+      	
+      	
+//Controller (Xbox and Joystick) Code is below this line.
+      	if(ToggleSliderValue == true) {
+      	// Retrieves Scaler set for Drive Train Motors on ShuffleBoard
+  			FrontLeftPos = SmartDashboard.getNumber("+FL_Scale",FrontLeftPos);
+    		FrontLeftNeg = SmartDashboard.getNumber("-FL_Scale",FrontLeftNeg);
+    		FrontRightPos = SmartDashboard.getNumber("+FR_Scale",FrontRightPos);
+    		FrontRightNeg = SmartDashboard.getNumber("-FR_Scale",FrontRightNeg);
+    		BackLeftPos = SmartDashboard.getNumber("+BL_Scale",BackLeftPos);
+    		BackLeftNeg = SmartDashboard.getNumber("-BL_Scale",BackLeftNeg);
+    		BackRightPos = SmartDashboard.getNumber("+BR_Scale",BackRightPos);
+    		BackRightNeg = SmartDashboard.getNumber("-BR_Scale",BackRightNeg);
+ 		
+    	//Retrieves Intake (Left & Right), Arm Motor, Slide Motor Scalers from ShuffleBoard.
+    		IntakeLeftPos = SmartDashboard.getNumber("+IL_Scale",IntakeLeftPos);
+    		IntakeLeftNeg = SmartDashboard.getNumber("-IL_Scale",IntakeLeftNeg);
+    		IntakeRightPos = SmartDashboard.getNumber("+IR_Scale",IntakeRightPos);
+    		IntakeRightNeg = SmartDashboard.getNumber("-IR_Scale",IntakeRightNeg);
+    		ArmPos = SmartDashboard.getNumber("+AM_Scale",ArmPos);
+    		ArmNeg = SmartDashboard.getNumber("-AM_Scale",ArmNeg);
+    		SlidePos = SmartDashboard.getNumber("+SM_Scale",SlidePos);
+    		SlideNeg = SmartDashboard.getNumber("-SM_Scale",SlideNeg);
+    		      	
+      		LeftY2 = Xbox.getY(Hand.kLeft);
+	    	RightY2 = Xbox.getY(Hand.kRight);
+	    	YAxis = Joystick.getY();
+	    	Twist = Joystick.getTwist();
+	    	Slider = (-(Joystick.getThrottle()-1)/2);
+	    	Trigger = Joystick.getTrigger();
+	    	Button = Joystick.getTop();
+	    
+	    	if(Button==false && Trigger==false){
+	        	IntakeLeft.set(0);
+	        	FinalIntakeLeft = 0;
+	        	IntakeRight.set(0);
+	        	FinalIntakeRight = 0;
+	        }else if(Button==true && Trigger==false){
+	        	IntakeLeft.set(IntakeLeftPos);
+	        	FinalIntakeLeft = (IntakeLeftPos);
+	        	IntakeRight.set(-IntakeRightNeg);
+	        	FinalIntakeRight = (-IntakeRightNeg);
+	        }else if(Button==false && Trigger==true){
+	        	IntakeLeft.set(-IntakeLeftNeg);
+	        	FinalIntakeLeft = (-IntakeLeftNeg);
+	        	IntakeRight.set(IntakeRightPos);
+	        	FinalIntakeRight = (IntakeRightPos);
+	        }//intake motors
+	        
+	        
+	        if(LeftY2<.1 && LeftY2>-.1){
+	        	SlideMotor.set(0);
+	        	FinalSlide = 0;
+	        }else if(LeftY2<.1 && LeftY2<=-.1){
+	        	SlideMotor.set(LeftY2*SlideNeg);
+	        	FinalSlide = (LeftY2*SlideNeg);
+	        }else if(LeftY2>=.1 && LeftY2>-.1){
+	        	SlideMotor.set(LeftY2*SlidePos);
+	        	FinalSlide = (LeftY2*SlidePos);
+	        }//Slide motor
+	        
+	        if(RightY2<.1 && RightY2>-.1){
+	        	ArmMotor.set(0);
+	        	FinalArm = 0;
+	        }else if(RightY2<.1 && RightY2<=-.1){
+	        	ArmMotor.set(RightY2*ArmNeg);
+	        	FinalArm = (RightY2*ArmNeg);
+	        }else if(RightY2>=.1 && RightY2>-.1){
+	        	ArmMotor.set(RightY2*ArmPos);
+	        	FinalArm = (RightY2*ArmPos);
+	        }//Arm motor
+	        
+	        
+	        if(YAxis<=.1 && YAxis>=-.1 && Twist<=.1 && Twist>=-.1){
+	        	FrontLeft.set(0);
+	        	FinalFrontLeft = (0);
+	        	BackLeft.set(0);
+	        	FinalBackLeft = (0);
+	        	FrontRight.set(0);
+	        	FinalFrontRight = (0);
+	        	BackRight.set(0);
+	        	FinalFrontRight = (0);
+	        	//Idle
+	        }else if(YAxis>.1 && Twist<=.1 && Twist>=-.1){
+	        	FrontLeft.set((YAxis*FrontLeftNeg)*Slider);
+	        	FinalFrontLeft = ((YAxis*FrontLeftNeg)*Slider);
+	        	BackLeft.set((YAxis*BackLeftNeg)*Slider);
+	        	FinalBackLeft = ((YAxis*BackLeftNeg)*Slider);
+	        	FrontRight.set((YAxis*FrontRightNeg)*Slider);
+	        	FinalFrontRight = ((YAxis*FrontRightNeg)*Slider);
+	        	BackRight.set((YAxis*BackRightNeg)*Slider);
+	        	FinalFrontRight = ((YAxis*BackRightNeg)*Slider);
+	        	//Motor Back
+	        }else if(YAxis<-.1 && Twist<=.1 && Twist>=-.1){
+	        	FrontLeft.set((YAxis*FrontLeftPos)*Slider);
+	        	FinalFrontLeft = ((YAxis*FrontLeftPos)*Slider);
+	        	BackLeft.set((YAxis*BackLeftPos)*Slider);
+	        	FinalBackLeft = ((YAxis*BackLeftPos)*Slider);
+	        	FrontRight.set((YAxis*FrontRightPos)*Slider);
+	        	FinalFrontRight = ((YAxis*FrontRightPos)*Slider);
+	        	BackRight.set((YAxis*BackRightPos)*Slider);
+	        	FinalFrontRight = ((YAxis*BackRightPos)*Slider);
+	        	//Motor Forward
+	        }else if(YAxis<-.1 && Twist>.1){
+	        	FrontLeft.set((YAxis*FrontLeftPos)*Slider);
+	        	FinalFrontLeft = ((YAxis*FrontLeftPos)*Slider);
+	        	BackLeft.set((YAxis*BackLeftPos)*Slider);
+	        	FinalBackLeft = ((YAxis*BackLeftPos)*Slider);
+	        	FrontRight.set(((YAxis*FrontLeftPos)*Slider)*(Twist*FrontLeftPos));
+	        	FinalFrontRight = (((YAxis*FrontLeftPos)*Slider)*(Twist*FrontLeftPos));
+	        	BackRight.set(((YAxis*BackLeftPos)*Slider)*(Twist*BackLeftPos));
+	        	FinalFrontRight = (((YAxis*BackLeftPos)*Slider)*(Twist*BackLeftPos));
+	        	//Forward Right
+	        }else if(YAxis<-.1 && Twist<-.1){
+	        	FrontLeft.set(((YAxis*FrontLeftPos)*Slider)*(Twist*-FrontLeftPos));
+	        	FinalFrontLeft = (((YAxis*FrontLeftPos)*Slider)*(Twist*-FrontLeftPos));
+	        	BackLeft.set(((YAxis*BackLeftPos)*Slider)*(Twist*-FrontLeftPos));
+	        	FinalBackLeft = (((YAxis*BackLeftPos)*Slider)*(Twist*-FrontLeftPos));
+	        	FrontRight.set((YAxis*FrontRightPos)*Slider);
+	        	FinalFrontRight = ((YAxis*FrontRightPos)*Slider);
+	        	BackRight.set((YAxis*BackRightPos)*Slider);
+	        	FinalFrontRight = ((YAxis*BackRightPos)*Slider);
+	        	//Forward Left
+	        }else if(YAxis>.1 && Twist>.1){
+	        	FrontLeft.set((YAxis*FrontLeftPos)*Slider);
+	        	FinalFrontLeft = ((YAxis*FrontLeftPos)*Slider);
+	        	BackLeft.set((YAxis*BackLeftPos)*Slider);
+	        	FinalBackLeft = ((YAxis*BackLeftPos)*Slider);
+	        	FrontRight.set(((YAxis*FrontLeftPos)*Slider)*(Twist*FrontLeftPos));
+	        	FinalFrontRight = (((YAxis*FrontLeftPos)*Slider)*(Twist*FrontLeftPos));
+	        	BackRight.set(((YAxis*BackLeftPos)*Slider)*(Twist*BackLeftPos));
+	        	FinalFrontRight = (((YAxis*BackLeftPos)*Slider)*(Twist*BackLeftPos));
+	        	//Back Right
+	        }else if(YAxis>.1 && Twist<-.1){
+	        	FrontLeft.set(((YAxis*FrontLeftPos)*Slider)*(Twist*-FrontLeftPos));
+	        	FinalFrontLeft = (((YAxis*FrontLeftPos)*Slider)*(Twist*-FrontLeftPos));
+	        	BackLeft.set(((YAxis*BackLeftPos)*Slider)*(Twist*-FrontLeftPos));
+	        	FinalBackLeft = (((YAxis*BackLeftPos)*Slider)*(Twist*-FrontLeftPos));
+	        	FrontRight.set((YAxis*FrontRightPos)*Slider);
+	        	FinalFrontRight = ((YAxis*FrontRightPos)*Slider);
+	        	BackRight.set((YAxis*BackRightPos)*Slider);
+	        	FinalFrontRight = ((YAxis*BackRightPos)*Slider);
+	        	//Back Left
+	        }else if(YAxis<=.1 && YAxis>=-.1 && Twist<-.1){
+	        	FrontLeft.set((Twist*FrontLeftNeg)*Slider);
+	        	FinalFrontLeft = ((Twist*FrontLeftNeg)*Slider);
+	        	BackLeft.set((Twist*BackLeftNeg)*Slider);
+	        	FinalBackLeft = ((Twist*BackLeftNeg)*Slider);
+	        	FrontRight.set((Twist*FrontRightPos)*-Slider);
+	        	FinalFrontRight = ((Twist*FrontRightPos)*-Slider);
+	        	BackRight.set((Twist*BackRightPos)*-Slider);
+	        	FinalFrontRight = ((Twist*BackRightPos)*-Slider);
+	        	//Spin Left
+	        }else if(YAxis<=.1 && YAxis>=-.1 && Twist>.1){
+	        	FrontLeft.set((Twist*FrontLeftPos)*Slider);
+	        	FinalFrontLeft = ((Twist*FrontLeftPos)*Slider);
+	        	BackLeft.set((Twist*BackLeftPos)*Slider);
+	        	FinalBackLeft = ((Twist*BackLeftPos)*Slider);
+	        	FrontRight.set((Twist*FrontRightNeg)*-Slider);
+	        	FinalFrontRight = ((Twist*FrontRightNeg)*-Slider);
+	        	BackRight.set((Twist*BackRightNeg)*-Slider);
+	        	FinalFrontRight = ((Twist*BackRightNeg)*-Slider);
+	        	//Spin Right
+	        }      
+	    	
+	      		
+	    		
+    		
+    		
+  			//Final Motor Value Output Displayed on Shuffleboard (from Controller)
+  				SmartDashboard.putNumber("FLMotor",FinalFrontLeft);
+  				SmartDashboard.putNumber("FRMotor",FinalFrontRight);
+  				SmartDashboard.putNumber("BLMotor",FinalBackLeft);
+  				SmartDashboard.putNumber("BRMotor",FinalBackRight);
+  			
+  				SmartDashboard.putNumber("ILMotor",FinalIntakeLeft);
+  				SmartDashboard.putNumber("IRMotor",FinalIntakeRight);
+  				SmartDashboard.putNumber("AMMotor",FinalArm);
+  				SmartDashboard.putNumber("SMMotor",FinalSlide);
+      	}
+    
     }
 }
