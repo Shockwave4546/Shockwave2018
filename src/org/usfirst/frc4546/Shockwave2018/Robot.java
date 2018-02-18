@@ -571,9 +571,9 @@ public class Robot extends TimedRobot {
     		SlidePos = SmartDashboard.getNumber("+SM_Scale",SlidePos);
     		SlideNeg = SmartDashboard.getNumber("-SM_Scale",SlideNeg);
     		      	
-      		LeftY2 = Xbox.getY(Hand.kLeft);
-	    	RightY2 = Xbox.getY(Hand.kRight);
-	    	YAxis = Joystick.getY();
+      		LeftY2 = (Xbox.getY(Hand.kLeft));
+	    	RightY2 = (Xbox.getY(Hand.kRight));
+	    	YAxis = (Joystick.getY());
 	    	Twist = Joystick.getTwist();
 	    	Slider = (-(Joystick.getThrottle()-1)/2);
 	    	Trigger = Joystick.getTrigger();
