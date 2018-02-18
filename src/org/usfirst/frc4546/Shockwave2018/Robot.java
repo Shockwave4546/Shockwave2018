@@ -458,37 +458,37 @@ public class Robot extends TimedRobot {
         		
       		//(Front Left Motor Final Value) Displayed on ShuffleBoard Depending on Scaler
       			if(FLSlideVal > 0){
-      				FinalFrontLeft = FLSlideVal*FrontLeftPos;
-      			}else if(FLSlideVal < 0){
       				FinalFrontLeft = FLSlideVal*FrontLeftNeg;
+      			}else if(FLSlideVal < 0){
+      				FinalFrontLeft = FLSlideVal*FrontLeftPos;
       			}
      		
       		//(Front Right Motor Final Value) Displayed on ShuffleBoard Depending on Scaler
       			if(FRSlideVal > 0){
-      				FinalFrontRight = FRSlideVal*FrontRightPos;
-      			}else if(FRSlideVal < 0){
       				FinalFrontRight = FRSlideVal*FrontRightNeg;
+      			}else if(FRSlideVal < 0){
+      				FinalFrontRight = FRSlideVal*FrontRightPos;
       			}
 			
       		//(Back Left Motor Final Value) Displayed on ShuffleBoard Depending on Scaler
       			if(BLSlideVal > 0){
-      				FinalBackLeft = BLSlideVal*BackLeftPos;
-      			}else if(BLSlideVal < 0){
       				FinalBackLeft = BLSlideVal*BackLeftNeg;
+      			}else if(BLSlideVal < 0){
+      				FinalBackLeft = BLSlideVal*BackLeftPos;
       			}
 			
       		//(Back Right Motor Final Value) Displayed on ShuffleBoard Depending on Scaler
       			if(BRSlideVal > 0){
-      				FinalBackRight = BRSlideVal*BackRightPos;
-      			}else if(BRSlideVal < 0){
       				FinalBackRight = BRSlideVal*BackRightNeg;
+      			}else if(BRSlideVal < 0){
+      				FinalBackRight = BRSlideVal*BackRightPos;
       			}
       			
       		//(Intake Left Motor Final Value) Displayed on ShuffleBoard Depending on Scaler
       			if(ILSlideVal > 0){
-      				FinalIntakeLeft = ILSlideVal*IntakeLeftPos;
-      			}else if(ILSlideVal < 0){
       				FinalIntakeLeft = ILSlideVal*IntakeLeftNeg;
+      			}else if(ILSlideVal < 0){
+      				FinalIntakeLeft = ILSlideVal*IntakeLeftPos;
       			}
       			
       		//(Intake Right Motor Final Value) Displayed on ShuffleBoard Depending on Scaler
