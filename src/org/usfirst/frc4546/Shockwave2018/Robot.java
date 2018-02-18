@@ -711,26 +711,4 @@ public class Robot extends TimedRobot {
   				SmartDashboard.putNumber("SMMotor",FinalSlide);
       	}
     }
-    public void ai() {
-    	
-    	AnalogInput.setGlobalSampleRate(62500);
-		
-		//Default value of samples per channel per second, causes all channels to sample at same rate
-		
-		AnalogInput exampleAnalog = new AnalogInput(0);
-		int raw = exampleAnalog.getValue();
-		double volts = exampleAnalog.getVoltage();
-		int averageRaw = exampleAnalog.getAverageValue();
-		double averageVolts = exampleAnalog.getAverageVoltage();
-		
-		/*
-		 *-Raw value for bits without calibration
-		 *-Volts value for bits after calibration
-		*/
-    
-		SmartDashboard.putNumber("Analog Value", exampleAnalog.getValue());
-		SmartDashboard.putNumber("Analog Voltage", exampleAnalog.getVoltage());
-		
-		//Just putting values on dashboard
-    }
 }
