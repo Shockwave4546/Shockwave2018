@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -69,8 +68,8 @@ public class Robot extends TimedRobot {
 	
 	private static final int kMotorPort1 = 1;//Motor Controller 4
 	private SpeedController BackLeft;
-	private double BackLeftPos = .8;
-	private double BackLeftNeg = .8;
+	private double BackLeftPos = 1;
+	private double BackLeftNeg = 1;
 	private double FinalBackLeft;
 	
 	private static final int kMotorPort5 = 5;//Motor Controller 6
