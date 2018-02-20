@@ -163,7 +163,7 @@ public class Robot extends TimedRobot {
 
 
     	SmartDashboard.putData("Auto mode", chooser);
-        /**new Thread(() -> {
+        new Thread(() -> {
             UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
             camera.setResolution(640, 480);
             
@@ -179,7 +179,7 @@ public class Robot extends TimedRobot {
                 outputStream.putFrame(output);
             }
         }).start();
-*/
+
     	SmartDashboard.putNumber("Total", m_PDP.getTotalPower() * Timer.getMatchTime());
     	
     	FrontLeft = new VictorSP(kMotorPort4);
