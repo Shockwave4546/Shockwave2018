@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
     private PowerDistributionPanel m_PDP;    
     String gameData;
     
-    private static final int kMotorPort1 = 1;//Motor Controller 4
+    private static final int kMotorPort4= 4;//Motor Controller 2
 	private SpeedController FrontLeft;
 	private double FrontLeftPos = .8;
 	private double FrontLeftNeg = .8;
@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
 	private double FrontRightNeg = .8;
 	private double FinalFrontRight;
 	
-	private static final int kMotorPort4= 4;//Motor Controller 2
+	private static final int kMotorPort1 = 1;//Motor Controller 4
 	private SpeedController BackLeft;
 	private double BackLeftPos = .8;
 	private double BackLeftNeg = .8;
@@ -182,13 +182,13 @@ public class Robot extends TimedRobot {
 */
     	SmartDashboard.putNumber("Total", m_PDP.getTotalPower() * Timer.getMatchTime());
     	
-    	FrontLeft = new VictorSP(kMotorPort1);
+    	FrontLeft = new VictorSP(kMotorPort4);
     	FrontLeft.setInverted(false);
     	
     	FrontRight = new VictorSP(kMotorPort3);
     	FrontRight.setInverted(true);
     	
-    	BackLeft = new VictorSP(kMotorPort4);
+    	BackLeft = new VictorSP(kMotorPort1);
     	BackLeft.setInverted(false);
     	
     	BackRight = new VictorSP(kMotorPort5);
