@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
     SendableChooser<Command> chooser = new SendableChooser<>();
     
     private static final int kPDP = 0;
-	private AnalogInput ai;
+	//private AnalogInput ai;
    
 	DigitalInput limitswitch;
 
@@ -80,14 +80,14 @@ public class Robot extends TimedRobot {
 	
 	private static final int kIntakePort2 = 2; //Motor Controller 10
 	private SpeedController IntakeLeft;
-	private double IntakeLeftPos = .5;
-	private double IntakeLeftNeg = .5;
+	private double IntakeLeftPos = .8;
+	private double IntakeLeftNeg = .8;
 	private double FinalIntakeLeft;
 	
 	private static final int kIntakePort7 = 7; //Motor Controller 7
 	private SpeedController IntakeRight;
-	private double IntakeRightPos = .5;
-	private double IntakeRightNeg = .5;
+	private double IntakeRightPos = .6;
+	private double IntakeRightNeg = .6;
 	private double FinalIntakeRight;
 	
 	private static final int kArmPort6 = 6;//Motor Controller 3
@@ -157,8 +157,8 @@ public class Robot extends TimedRobot {
     	SmartDashboard.putNumber("Total", m_PDP.getTotalPower() * Timer.getMatchTime());
 
     	
-    	ai = new AnalogInput(0);
-    	limitswitch = new DigitalInput(1);
+    	//ai = new AnalogInput(0);
+    	//limitswitch = new DigitalInput(1);
 
 
     	SmartDashboard.putData("Auto mode", chooser);
@@ -200,16 +200,14 @@ public class Robot extends TimedRobot {
     	IntakeRight.setInverted(false);
     	
      	ArmMotor = new VictorSP(kArmPort6);
-     	ArmMotor.setInverted(false);
+     	ArmMotor.setInverted(true);
      	
     	SlideMotor = new VictorSP(kSlidePort8);
-    	SlideMotor.setInverted(false);
+    	SlideMotor.setInverted(true);
     	Joystick = new Joystick(0);
     	Xbox = new XboxController(1);
     	
     	//speedController9 = new VictorSP(kMotorPort9);
-        SmartDashboard.putData("Auto mode", chooser);
-    	SmartDashboard.putData("Auto mode", chooser);
     }
 
     /**
@@ -239,25 +237,25 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-   	gameData = DriverStation.getInstance().getGameSpecificMessage();
+   	//gameData = DriverStation.getInstance().getGameSpecificMessage();
     	
-    	if(gameData.length() > 0){
-    		if(gameData.charAt(0) == 'L'){
+    	//if(gameData.length() > 0){
+    		//if(gameData.charAt(0) == 'L'){
     			FrontRight.set(auto);
     			FrontLeft.set(auto);
     			BackRight.set(auto);
     			BackLeft.set(auto);
-    			Timer.delay(delay0);
+    			Timer.delay(15);
     			FrontRight.set(-auto);
-    			FrontLeft.set(auto);
+    			FrontLeft.set(-auto);
     			BackRight.set(-auto);
-    			BackLeft.set(auto);
-    			Timer.delay(delay1);
-    			ArmMotor.set(1);
-    			Timer.delay(delay5);
+    			BackLeft.set(-auto);
+    			Timer.delay(15);
+    			//ArmMotor.set(1);
+    			//Timer.delay(delay5);
     			IntakeLeft.set(auto);
     			IntakeRight.set(auto);
-    		}else{
+    		/*}else{
     			FrontRight.set(auto);
     			FrontLeft.set(auto);
     			BackRight.set(auto);
@@ -292,7 +290,7 @@ public class Robot extends TimedRobot {
     			Timer.delay(delay5);
     			IntakeLeft.set(auto);
     			IntakeRight.set(auto);}
-    }
+    }*/
    }
     @Override
     public void teleopInit() {
@@ -358,16 +356,14 @@ public class Robot extends TimedRobot {
 
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-		if(limitswitch.get() == true){
-	
-		}
-        Scheduler.getInstance().run();
+		
 
  
         	//Toggle Button for Boolean on ShuffleBoard
-      		boolean ToggleSliderValue = SmartDashboard.getBoolean("ToggleSliderControl", true);
+      		// boolean ToggleSliderValue = SmartDashboard.getBoolean("ToggleSliderControl", true);
+      		boolean ToggleSliderValue = true;
       		
-      		if(ai.getValue() > 3500){
+      		/*if(ai.getValue() > 3500){
     			ArmMotor.set(1);
     		}
             if(ai.getValue() > 3000 && ai.getValue() < 3450){
@@ -383,7 +379,7 @@ public class Robot extends TimedRobot {
     		}
       		
     		SmartDashboard.putNumber("Analog Value", ai.getValue());
-    		SmartDashboard.putNumber("Analog Voltage", ai.getVoltage());
+    		SmartDashboard.putNumber("Analog Voltage", ai.getVoltage());*/
       		
  //ShuffleBoard Control Code is below this line.     	
       	if(ToggleSliderValue == false) {
@@ -535,53 +531,43 @@ public class Robot extends TimedRobot {
 	    
 	    	if(Button==false && Trigger==false){
 	        	FinalIntakeLeft = 0;
-	        	IntakeLeft.set(FinalIntakeLeft);
 	        	FinalIntakeRight = 0;
-	        	IntakeRight.set(FinalIntakeRight);
 	        	//Intake motor idle
 	        }else if(Button==true && Trigger==false){
 	        	FinalIntakeLeft = (IntakeLeftPos);
-	        	IntakeLeft.set(FinalIntakeLeft);
 	        	FinalIntakeRight = (-IntakeRightNeg);
-	        	IntakeRight.set(FinalIntakeRight);
 	        	//Intake motors in when trigger button on joy stick is pressed
 	        }else if(Button==false && Trigger==true){
 	        	FinalIntakeLeft = (-IntakeLeftNeg);
-	        	IntakeLeft.set(FinalIntakeLeft);
 	        	FinalIntakeRight = (IntakeRightPos);
-	        	IntakeRight.set(FinalIntakeRight);
 	        	//intake motors out when thumb button is pressed
-
 	        }//intake motors
-	        
+	        IntakeLeft.set(FinalIntakeLeft);
+	        IntakeRight.set(FinalIntakeRight);
 	        
 	        if(LeftY2<.1 && LeftY2>-.1){
-	        	SlideMotor.set(0);
 	        	FinalSlide = 0;
 	        	//slide idle
 	        }else if(LeftY2<.1 && LeftY2<=-.1){
-	        	FinalSlide = (LeftY2*SlideNeg);
-	        	SlideMotor.set(FinalSlide);
-	        	//slide up
-	        }else if(LeftY2>=.1 && LeftY2>-.1){
 	        	FinalSlide = (LeftY2*SlidePos);
-	        	SlideMotor.set(FinalSlide);
 	        	//slide down
+	        }else if(LeftY2>=.1 && LeftY2>-.1){
+	        	FinalSlide = (LeftY2*SlideNeg);
+	        	//slide up
 	        }//Slide motor
+	        SlideMotor.set(FinalSlide);
 	        
 	        if(RightY2<.1 && RightY2>-.1){
-	        	ArmMotor.set(0);
 	        	FinalArm = 0;
 	        	//arm motor idle
 	        }else if(RightY2<.1 && RightY2<=-.1){
-	        	FinalArm = (RightY2*ArmNeg);
-	        	ArmMotor.set(FinalArm);
-	        	//arm motor up
-	        }else if(RightY2>=.1 && RightY2>-.1){
 	        	FinalArm = (RightY2*ArmPos);
-	        	ArmMotor.set(FinalArm);
 	        	//arm motor down
+	        }else if(RightY2>=.1 && RightY2>-.1){
+	        	FinalArm = (RightY2*ArmNeg);
+	        	//arm motor up
 	        }//Arm motor
+	        ArmMotor.set(FinalArm);
 	        
 	        if(YAxis<=.15 && YAxis>=-.15 && Twist<=.3 && Twist>=-.3){
 	        	FinalFrontLeft = (0);
