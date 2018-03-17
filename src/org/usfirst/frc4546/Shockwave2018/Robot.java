@@ -126,6 +126,8 @@ public class Robot extends TimedRobot {
 	private double delay0 = 1;
 	
 	private double Turn = .2;
+	
+	public int autot = 0;
 	//private static final int kMotorPort9 = 9;
 
 	//private SpeedController speedController9;
@@ -225,7 +227,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        autonomousCommand = chooser.getSelected();
+    	
+    	autot = 0;
+    	autonomousCommand = chooser.getSelected();
         // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }
@@ -236,16 +240,29 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+       
+        
+        if (autot < 1){
+        	FrontRight.set(-auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(4);
+        }
+        else{
+        FrontRight.set(0);
+		FrontLeft.set(0);
+		BackRight.set(0);
+		BackLeft.set(0);
+        }
+        
+        autot++;
    	//gameData = DriverStation.getInstance().getGameSpecificMessage();
     	
     	//if(gameData.length() > 0){
     		//if(gameData.charAt(0) == 'L'){
-    			FrontRight.set(auto);
-    			FrontLeft.set(auto);
-    			BackRight.set(auto);
-    			BackLeft.set(auto);
-    			Timer.delay(15);
-    			FrontRight.set(-auto);
+    		
+    			/*FrontRight.set(-auto);
     			FrontLeft.set(-auto);
     			BackRight.set(-auto);
     			BackLeft.set(-auto);
@@ -253,7 +270,7 @@ public class Robot extends TimedRobot {
     			//ArmMotor.set(1);
     			//Timer.delay(delay5);
     			IntakeLeft.set(auto);
-    			IntakeRight.set(auto);
+    			IntakeRight.set(auto); */
     		/*}else{
     			FrontRight.set(auto);
     			FrontLeft.set(auto);
@@ -291,6 +308,7 @@ public class Robot extends TimedRobot {
     			IntakeRight.set(auto);}
     }*/
    }
+
     @Override
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
