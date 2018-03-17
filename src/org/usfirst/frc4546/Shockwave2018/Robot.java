@@ -471,7 +471,6 @@ public class Robot extends TimedRobot {
       				FinalSlide = SMSlideVal*SlideNeg;
       			}
       			
-      			
       		//Final Motor Value Output Displayed on Shuffleboard
       			SmartDashboard.putNumber("FLMotor",FinalFrontLeft);
       			SmartDashboard.putNumber("FRMotor",FinalFrontRight);
@@ -482,7 +481,6 @@ public class Robot extends TimedRobot {
       			SmartDashboard.putNumber("IRMotor",FinalIntakeRight);
       			SmartDashboard.putNumber("AMMotor",FinalArm);
       			SmartDashboard.putNumber("SMMotor",FinalSlide);
-      			
       			
       			FrontLeft.set(FinalFrontLeft);
       			FrontRight.set(FinalFrontRight);
@@ -495,8 +493,6 @@ public class Robot extends TimedRobot {
       			SlideMotor.set(FinalSlide);
       			
       	} 
-      	
-      	
       	
       	
 //Controller (Xbox and Joystick) Code is below this line.
@@ -571,132 +567,73 @@ public class Robot extends TimedRobot {
 	        
 	        if(YAxis<=.15 && YAxis>=-.15 && Twist<=.3 && Twist>=-.3){
 	        	FinalFrontLeft = (0);
-	        	FrontLeft.set(FinalFrontLeft);
-	        	
 	        	FinalBackLeft = (0);
-	        	BackLeft.set(FinalBackLeft);
-	        	
 	        	FinalFrontRight = (0);
-	        	FrontRight.set(FinalFrontRight);
-	        	
 	        	FinalBackRight = (0);
-	        	BackRight.set(FinalBackRight);
 	        	//Idle
 	        	
 	        }else if(YAxis>.15 && Twist<=.3 && Twist>=-.3){
-
 	        	FinalFrontLeft = ((YAxis*FrontLeftPos)*Slider);
-	        	FrontLeft.set(FinalFrontLeft);
-	        	
 	        	FinalBackLeft = ((YAxis*BackLeftPos)*Slider);
-	        	BackLeft.set(FinalBackLeft);
-	        	
 	        	FinalFrontRight = ((YAxis*FrontRightPos)*Slider);
-	        	FrontRight.set(FinalFrontRight);
-	        	
 	        	FinalBackRight = ((YAxis*BackRightPos)*Slider);
-	        	BackRight.set(FinalBackRight);
 	        	//Motor Back
 	        	
 	        }else if(YAxis<-.15 && Twist<=.3 && Twist>=-.3){
 	        	FinalFrontLeft = ((YAxis*FrontLeftNeg)*Slider);
-	        	FrontLeft.set(FinalFrontLeft);
-	        	
 	        	FinalBackLeft = ((YAxis*BackLeftNeg)*Slider);
-	        	BackLeft.set(FinalBackLeft);
-	        	
 	        	FinalFrontRight = ((YAxis*FrontRightNeg)*Slider);
-	        	FrontRight.set(FinalFrontRight);
-	        	
 	        	FinalBackRight = ((YAxis*BackRightNeg)*Slider);
-	        	BackRight.set(FinalBackRight);
 	        	//Motor Forward
 	        	
 	        }else if(YAxis<-.15 && Twist>.3){
 	        	FinalFrontLeft = ((YAxis*FrontLeftNeg)*Slider);
-	        	FrontLeft.set(FinalFrontLeft);
-	        	
 	        	FinalBackLeft = ((YAxis*BackLeftNeg)*Slider);
-	        	BackLeft.set(FinalBackLeft);
-	        	
 	        	FinalFrontRight = (((YAxis*FrontLeftNeg)*Slider)*(1-Twist+Turn));
-	        	FrontRight.set(FinalFrontRight);
-	        	
 	        	FinalBackRight = (((YAxis*BackLeftNeg)*Slider)*(1-Twist+Turn));
-	        	BackRight.set(FinalBackRight);
 	        	//Forward Right
 	        	
 	        }else if(YAxis<-.15 && Twist<-.3){
 	        	FinalFrontLeft = (((YAxis*FrontLeftPos)*Slider)*(1+Twist+Turn));
-	        	FrontLeft.set(FinalFrontLeft);
-	        	
 	        	FinalBackLeft = (((YAxis*BackLeftPos)*Slider)*(1+Twist+Turn));
-	        	BackLeft.set(FinalBackLeft);
-	        	
 	        	FinalFrontRight = ((YAxis*FrontRightPos)*Slider);
-	        	FrontRight.set(FinalFrontRight);
-	        	
 	        	FinalBackRight = ((YAxis*BackRightPos)*Slider);
-	        	BackRight.set(FinalBackRight);
 	        	//Forward Left
 	        	
 	        }else if(YAxis>.15 && Twist>.3){
 	        	FinalFrontLeft = (((YAxis*FrontLeftPos)*Slider)*(1-Twist+Turn));
-	        	FrontLeft.set(FinalFrontLeft);
-	        	
 	        	FinalBackLeft = (((YAxis*BackLeftPos)*Slider)*(1-Twist+Turn));
-	        	BackLeft.set(FinalBackLeft);
-	        	
 	        	FinalFrontRight = ((YAxis*FrontLeftPos)*Slider);
-	        	FrontRight.set(FinalFrontRight);
-	        	
 	        	FinalBackRight = ((YAxis*BackLeftPos)*Slider);
-	        	BackRight.set(FinalBackRight);
 	        	//Back Right
 	        	
 	        }else if(YAxis>.15 && Twist<-.3){ 
 	        	FinalFrontLeft = ((YAxis*FrontLeftPos)*Slider);
-	        	FrontLeft.set(FinalFrontLeft);
-	        	
 	        	FinalBackLeft = ((YAxis*BackLeftPos)*Slider);
-	        	BackLeft.set(FinalBackLeft);
-	        	
 	        	FinalFrontRight = (((YAxis*FrontRightPos)*Slider)*(1+Twist+Turn));
-	        	FrontRight.set(FinalFrontRight);
-	        	
 	        	FinalBackRight = (((YAxis*BackRightPos)*Slider)*(1+Twist+Turn));
-	        	BackRight.set(FinalBackRight);
 	        	//Back Left
 	        	
 	        }else if(YAxis<=.15 && YAxis>=-.15 && Twist<-.3){
 	        	FinalFrontLeft = ((Twist*FrontLeftNeg)*-Slider);
-	        	FrontLeft.set(FinalFrontLeft);
-	        	
 	        	FinalBackLeft = ((Twist*BackLeftNeg)*-Slider);
-	        	BackLeft.set(FinalBackLeft);
-	        	
 	        	FinalFrontRight = ((Twist*FrontRightPos)*Slider);
-	        	FrontRight.set(FinalFrontRight);
-	        	
 	        	FinalBackRight = ((Twist*BackRightPos)*Slider);
-	        	BackRight.set(FinalBackRight);
 	        	//Spin Left
 	        	
 	        }else if(YAxis<=.15 && YAxis>=-.15 && Twist>.3){
 	        	FinalFrontLeft = ((Twist*FrontLeftPos)*-Slider);
-	        	FrontLeft.set(FinalFrontLeft);
-	        	
 	        	FinalBackLeft = ((Twist*BackLeftPos)*-Slider);
-	        	BackLeft.set(FinalBackLeft);
-	        	
 	        	FinalFrontRight = ((Twist*FrontRightNeg)*Slider);
-	        	FrontRight.set(FinalFrontRight);
-	        	
 	        	FinalBackRight = ((Twist*BackRightNeg)*Slider);
-	        	BackRight.set(FinalBackRight);
 	        	//Spin Right
 	        	
 	        }   
+	        FrontLeft.set(FinalFrontLeft);
+	        BackLeft.set(FinalBackLeft);
+	        FrontRight.set(FinalFrontRight);
+	        BackRight.set(FinalBackRight);
+	        
 	    	//Final Motor Value Output Displayed on Shuffleboard (from Controller)
   				SmartDashboard.putNumber("FLMotor",FinalFrontLeft);
   				SmartDashboard.putNumber("FRMotor",FinalFrontRight);
