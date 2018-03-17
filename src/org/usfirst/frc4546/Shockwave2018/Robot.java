@@ -157,8 +157,7 @@ public class Robot extends TimedRobot {
     	SmartDashboard.putNumber("Total", m_PDP.getTotalPower() * Timer.getMatchTime());
 
     	
-    	//ai = new AnalogInput(0);
-    	//limitswitch = new DigitalInput(1);
+    
 
 
     	SmartDashboard.putData("Auto mode", chooser);
@@ -179,7 +178,7 @@ public class Robot extends TimedRobot {
             }
         }).start();
 
-    	SmartDashboard.putNumber("Total", m_PDP.getTotalPower() * Timer.getMatchTime());
+ 
     	
     	FrontLeft = new VictorSP(kMotorPort4);
     	FrontLeft.setInverted(false);
@@ -207,7 +206,7 @@ public class Robot extends TimedRobot {
     	Joystick = new Joystick(0);
     	Xbox = new XboxController(1);
     	
-    	//speedController9 = new VictorSP(kMotorPort9);
+    	
     }
 
     /**
@@ -356,31 +355,9 @@ public class Robot extends TimedRobot {
 
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-		
 
- 
-        	//Toggle Button for Boolean on ShuffleBoard
-      		// boolean ToggleSliderValue = SmartDashboard.getBoolean("ToggleSliderControl", true);
       		boolean ToggleSliderValue = true;
-      		
-      		/*if(ai.getValue() > 3500){
-    			ArmMotor.set(1);
-    		}
-            if(ai.getValue() > 3000 && ai.getValue() < 3450){
-    			ArmMotor.set(0.5);
-    		}
-    		if(ai.getValue() < 2950 && ai.getValue() > 1450){
-    			ArmMotor.set(0.1);
-    		}
-    		if(ai.getValue() < 1000){
-    			ArmMotor.set(0);
-    		}
-    		if(limitswitch.get() == true){	
-    		}
-      		
-    		SmartDashboard.putNumber("Analog Value", ai.getValue());
-    		SmartDashboard.putNumber("Analog Voltage", ai.getVoltage());*/
-      		
+
  //ShuffleBoard Control Code is below this line.     	
       	if(ToggleSliderValue == false) {
       		// Slider for the Left Motor and Right Motor (Gets value from slider)
@@ -525,21 +502,27 @@ public class Robot extends TimedRobot {
 	    	Trigger = Joystick.getTrigger();
 	    	Button = Joystick.getTop();
 	    
-	    	if(Button==false && Trigger==false){
-	        	FinalIntakeLeft = 0;
-	        	FinalIntakeRight = 0;
-	        	//Intake motor idle
-	        }else if(Button==true && Trigger==false){
-	        	FinalIntakeLeft = (IntakeLeftPos);
-	        	FinalIntakeRight = (-IntakeRightNeg);
-	        	//Intake motors in when trigger button on joy stick is pressed
-	        }else if(Button==false && Trigger==true){
-	        	FinalIntakeLeft = (-IntakeLeftNeg);
-	        	FinalIntakeRight = (IntakeRightPos);
-	        	//intake motors out when thumb button is pressed
-	        }//intake motors
-	        IntakeLeft.set(FinalIntakeLeft);
-	        IntakeRight.set(FinalIntakeRight);
+	    	if (Button == false && Trigger == false) {
+				FinalIntakeLeft = 0;
+				FinalIntakeRight = 0;
+				SmartDashboard.putString("LeftIntake", "Neutral");
+				SmartDashboard.putString("RightIntake", "Neutral");
+				// Intake motor idle
+			} else if (Button == true && Trigger == false) {
+				FinalIntakeLeft = (IntakeLeftPos);
+				FinalIntakeRight = (-IntakeRightNeg);
+				SmartDashboard.putString("LeftIntake", "OUT");
+				SmartDashboard.putString("RightIntake", "OUT");
+				// Intake motors in when trigger button on joy stick is pressed
+			} else if (Button == false && Trigger == true) {
+				FinalIntakeLeft = (-IntakeLeftNeg);
+				FinalIntakeRight = (IntakeRightPos);
+				SmartDashboard.putString("LeftIntake", "IN");
+				SmartDashboard.putString("RightIntake", "IN");
+				// intake motors out when thumb button is pressed
+			} // intake motors
+			IntakeLeft.set(FinalIntakeLeft);
+			IntakeRight.set(FinalIntakeRight);
 	        
 	        if(LeftY2<.1 && LeftY2>-.1){
 	        	FinalSlide = 0;
@@ -634,6 +617,24 @@ public class Robot extends TimedRobot {
 	        FrontRight.set(FinalFrontRight);
 	        BackRight.set(FinalBackRight);
 	        
+	     // Shuffleboard Turning Indicator
+	     			if ((FinalFrontLeft > FinalFrontRight) && (FinalFrontRight < FinalFrontLeft)) {
+	     				SmartDashboard.putString("Turning", "Right");
+	     			} else if ((FinalFrontLeft < FinalFrontRight) && (FinalFrontRight > FinalFrontLeft)) {
+	     				SmartDashboard.putString("Turning", "Left");
+	     			} else if ((FinalFrontLeft == FinalFrontRight)) {
+	     				SmartDashboard.putString("Turning", "N/A");
+	     			}
+
+	     			// Shuffleboard Movement Indicator
+	     			if ((FinalFrontLeft > 0) && (FinalFrontRight > 0) && (FinalBackLeft > 0) && (FinalBackRight > 0)) {
+	     				SmartDashboard.putString("Main Direction", "Forward");
+	     			} else if ((FinalFrontLeft < 0) && (FinalFrontRight < 0) && (FinalBackLeft < 0) && (FinalBackRight < 0)) {
+	     				SmartDashboard.putString("Main Direction", "Backward");
+	     			} else if ((FinalFrontLeft == 0) && (FinalFrontRight == 0) && (FinalBackLeft == 0) && (FinalBackRight == 0)) {
+	     				SmartDashboard.putString("Main Direction", "Neutral");
+	     			}
+	     			
 	    	//Final Motor Value Output Displayed on Shuffleboard (from Controller)
   				SmartDashboard.putNumber("FLMotor",FinalFrontLeft);
   				SmartDashboard.putNumber("FRMotor",FinalFrontRight);
