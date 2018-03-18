@@ -645,9 +645,9 @@ public class Robot extends TimedRobot {
 
 	     			// Shuffleboard Movement Indicator
 	     			if ((FinalFrontLeft > 0) && (FinalFrontRight > 0) && (FinalBackLeft > 0) && (FinalBackRight > 0)) {
-	     				SmartDashboard.putString("Main Direction", "Forward");
-	     			} else if ((FinalFrontLeft < 0) && (FinalFrontRight < 0) && (FinalBackLeft < 0) && (FinalBackRight < 0)) {
 	     				SmartDashboard.putString("Main Direction", "Backward");
+	     			} else if ((FinalFrontLeft < 0) && (FinalFrontRight < 0) && (FinalBackLeft < 0) && (FinalBackRight < 0)) {
+	     				SmartDashboard.putString("Main Direction", "Forward");
 	     			} else if ((FinalFrontLeft == 0) && (FinalFrontRight == 0) && (FinalBackLeft == 0) && (FinalBackRight == 0)) {
 	     				SmartDashboard.putString("Main Direction", "Neutral");
 	     			}
