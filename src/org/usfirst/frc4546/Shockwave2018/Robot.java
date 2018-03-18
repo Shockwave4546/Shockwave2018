@@ -99,7 +99,7 @@ public class Robot extends TimedRobot {
 	private static final int kSlidePort8 = 8;//Motor Controller 1
 	private SpeedController SlideMotor;
 	private double SlidePos = .5;
-	private double SlideNeg = .5;
+	private double SlideNeg = 1;
 	private double FinalSlide;
 	
 	public static Joystick Joystick;
@@ -112,6 +112,7 @@ public class Robot extends TimedRobot {
 	public static XboxController Xbox;
     private double LeftY2;
     private double RightY2;
+    private boolean XboxBump;
     
 	private double auto = 0.5;
 	private double delay1 = 0.1;
@@ -126,6 +127,8 @@ public class Robot extends TimedRobot {
 	private double delay0 = 1;
 	
 	private double Turn = .2;
+	
+	public int autot = 0;
 	//private static final int kMotorPort9 = 9;
 
 	//private SpeedController speedController9;
@@ -151,16 +154,6 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
     	
-    	m_PDP = new PowerDistributionPanel(kPDP);
-    	SmartDashboard.putData("Voltage/Current", m_PDP);
-    	SmartDashboard.putNumber("Power", m_PDP.getTotalPower());
-    	SmartDashboard.putNumber("Total", m_PDP.getTotalPower() * Timer.getMatchTime());
-
-    	
-    
-
-
-    	SmartDashboard.putData("Auto mode", chooser);
         new Thread(() -> {
             UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
             camera.setResolution(640, 480);
@@ -177,8 +170,15 @@ public class Robot extends TimedRobot {
                 outputStream.putFrame(output);
             }
         }).start();
+    	
+    	m_PDP = new PowerDistributionPanel(kPDP);
+    	SmartDashboard.putData("Voltage/Current", m_PDP);
+    	SmartDashboard.putNumber("Power", m_PDP.getTotalPower());
+    	SmartDashboard.putNumber("Total", m_PDP.getTotalPower() * Timer.getMatchTime());
 
- 
+
+    	SmartDashboard.putData("Auto mode", chooser);
+
     	
     	FrontLeft = new VictorSP(kMotorPort4);
     	FrontLeft.setInverted(false);
@@ -225,7 +225,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        autonomousCommand = chooser.getSelected();
+    	
+    	autot = 0;
+    	autonomousCommand = chooser.getSelected();
         // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }
@@ -236,16 +238,29 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+      
+        
+        if (autot < 1){
+        	FrontRight.set(-auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(4);
+        }
+        else{
+        FrontRight.set(0);
+		FrontLeft.set(0);
+		BackRight.set(0);
+		BackLeft.set(0);
+        }
+        
+        autot++;
    	//gameData = DriverStation.getInstance().getGameSpecificMessage();
     	
     	//if(gameData.length() > 0){
     		//if(gameData.charAt(0) == 'L'){
-    			FrontRight.set(auto);
-    			FrontLeft.set(auto);
-    			BackRight.set(auto);
-    			BackLeft.set(auto);
-    			Timer.delay(15);
-    			FrontRight.set(-auto);
+    		
+    			/*FrontRight.set(-auto);
     			FrontLeft.set(-auto);
     			BackRight.set(-auto);
     			BackLeft.set(-auto);
@@ -253,7 +268,7 @@ public class Robot extends TimedRobot {
     			//ArmMotor.set(1);
     			//Timer.delay(delay5);
     			IntakeLeft.set(auto);
-    			IntakeRight.set(auto);
+    			IntakeRight.set(auto); */
     		/*}else{
     			FrontRight.set(auto);
     			FrontLeft.set(auto);
@@ -291,6 +306,7 @@ public class Robot extends TimedRobot {
     			IntakeRight.set(auto);}
     }*/
    }
+
     @Override
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
@@ -501,20 +517,21 @@ public class Robot extends TimedRobot {
 	    	Slider = (-(Joystick.getThrottle()-1)/2);
 	    	Trigger = Joystick.getTrigger();
 	    	Button = Joystick.getTop();
+	    	XboxBump = Xbox.getBumper(Hand.kRight);
 	    
-	    	if (Button == false && Trigger == false) {
+	    	if (Button == false && Trigger == false && XboxBump == false) {
 				FinalIntakeLeft = 0;
 				FinalIntakeRight = 0;
 				SmartDashboard.putString("LeftIntake", "Neutral");
 				SmartDashboard.putString("RightIntake", "Neutral");
 				// Intake motor idle
-			} else if (Button == true && Trigger == false) {
+			} else if ((Button == true || XboxBump == true)&& Trigger == false) {
 				FinalIntakeLeft = (IntakeLeftPos);
 				FinalIntakeRight = (-IntakeRightNeg);
 				SmartDashboard.putString("LeftIntake", "OUT");
 				SmartDashboard.putString("RightIntake", "OUT");
 				// Intake motors in when trigger button on joy stick is pressed
-			} else if (Button == false && Trigger == true) {
+			} else if (Button == false && Trigger == true && XboxBump == false) {
 				FinalIntakeLeft = (-IntakeLeftNeg);
 				FinalIntakeRight = (IntakeRightPos);
 				SmartDashboard.putString("LeftIntake", "IN");
