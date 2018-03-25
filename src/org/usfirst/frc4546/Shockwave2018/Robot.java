@@ -238,11 +238,8 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();      
-        if(autoselection == Disable){
-        	FrontRight.set(0);
-    		FrontLeft.set(0);
-    		BackRight.set(0);
-    		BackLeft.set(0);
+        /*if(autoselection == Disable){
+
         }
         if(autoselection == Left){						//Left
         	if(gameData.length() > 0){
@@ -268,7 +265,7 @@ public class Robot extends TimedRobot {
         			
         		}
             }
-        }
+        }*/
         
         if (autot < 1){
         	FrontRight.set(-auto * .85);
