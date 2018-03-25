@@ -119,7 +119,7 @@ public class Robot extends TimedRobot {
     private int Left;
     private int Center;
     private int Right;
-    private int Diable;
+    private int Disable;
     
 	private double auto = 0.5;
 	
