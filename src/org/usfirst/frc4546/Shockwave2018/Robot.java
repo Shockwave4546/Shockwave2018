@@ -254,8 +254,10 @@ public class Robot extends IterativeRobot {
 				FrontLeft.set(0);
 				BackRight.set(0);
 				BackLeft.set(0);
+				System.out.println("Disable");
 			}
 			if (autoselection == "Left") { // Left
+				System.out.println("Left");
 				if (gameData.length() > 0) {
 					if (gameData.charAt(0) == 'L') { // Target Left
 						FrontRight.set(-auto * .85);
@@ -312,6 +314,7 @@ public class Robot extends IterativeRobot {
 					}
 				}
 			} else if (autoselection == "Center") { // Center
+				System.out.println("Center");
 				if (gameData.length() > 0) {
 					if (gameData.charAt(0) == 'L') { // Target Left
 						FrontRight.set(-auto * .85);
@@ -388,6 +391,7 @@ public class Robot extends IterativeRobot {
 					}
 				}
 			} else if (autoselection == "Right") { // Right
+				System.out.println("Right");
 				if (gameData.length() > 0) {
 					if (gameData.charAt(0) == 'L') { // Target Left
 						FrontRight.set(-auto * .85);
