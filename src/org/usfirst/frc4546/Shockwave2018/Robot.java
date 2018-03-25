@@ -260,62 +260,195 @@ public class Robot extends TimedRobot {
         
         autot++;
     }
-   	//gameData = DriverStation.getInstance().getGameSpecificMessage();
+   	/*gameData = DriverStation.getInstance().getGameSpecificMessage();
     	
-    	//if(gameData.length() > 0){
-    		//if(gameData.charAt(0) == 'L'){
+    	if(gameData.length() > 0){
+    	
+    		if(gameData.charAt(0) == 'L'){
     		
-    			/*FrontRight.set(-auto);
+    		//pos 1
+    		FrontRight.set(-auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(2.3);
+			SlideMotor.set(1);
+    		Timer.set(2);
+			FrontRight.set(auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(1);
+			IntakeLeft(-1);
+			IntakeRight(1);
+			Timer.delay(1);
+    		}else{
+    		FrontRight.set(-auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(2.75);	
+    		FrontRight.set(auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(1);	
+    		FrontRight.set(-auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(2.9);		
+    		FrontRight.set(auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(1);
+			FrontRight.set(-auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(0.75);
+			SlideMotor.set(1);
+			TImer.delay(1);
+			FrontRight.set(auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(1);
+			IntakeLeft.set(-1);
+			IntakeRight.set(1);
+			Timer.delay(1);}
+			
+			//pos 2
+			FrontRight.set(-auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(1.35);	
+			FrontRight.set(auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(1);
+			FrontRight.set(-auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(1.2);
+			FrontRight.set(auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(1);
+			FrontRight.set(-auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(0.5);
+			SlideMotor.set(1);
+			Timer.delay(2);
+			FrontRight.set(auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(1);
+			IntakeLeft.set(1);
+			IntakeRight.set(1);
+			Timer.delay(1);
+			}else{
+			FrontRight.set(-auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(1.35);	
+			FrontRight.set(-auto * .85);
+			FrontLeft.set(auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(auto);
+			Timer.delay(1);
+			FrontRight.set(-auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(1.2);
+			FrontRight.set(-auto * .85);
+			FrontLeft.set(auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(auto);
+			Timer.delay(1);
+			FrontRight.set(-auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(0.5);
+			SlideMotor.set(1);
+			Timer.delay(2);
+			FrontRight.set(-auto * .85);
+			FrontLeft.set(auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(auto);
+			Timer.delay(1);
+			IntakeLeft.set(1);
+			IntakeRight.set(1);
+			Timer.delay(1);}
+			
+			//pos 3
+    		FrontRight.set(-auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(2.3);
+			SlideMotor.set(1);
+    		Timer.set(2);
+			FrontRight.set(-auto * .85);
+			FrontLeft.set(auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(auto);
+			Timer.delay(1);
+			IntakeLeft(-1);
+			IntakeRight(1);
+			Timer.delay(1);
+    		}else{
+    		FrontRight.set(-auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(2.75);	
+    		FrontRight.set(-auto * .85);
+			FrontLeft.set(auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(auto);
+			Timer.delay(1);	
+    		FrontRight.set(-auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(2.9);		
+    		FrontRight.set(-auto * .85);
+			FrontLeft.set(auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(auto);
+			Timer.delay(1);
+			FrontRight.set(-auto * .85);
+			FrontLeft.set(-auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(-auto);
+			Timer.delay(0.75);
+			SlideMotor.set(1);
+			TImer.delay(1);
+			FrontRight.set(-auto * .85);
+			FrontLeft.set(auto);
+			BackRight.set(-auto * .85);
+			BackLeft.set(auto);
+			Timer.delay(1);
+			IntakeLeft.set(-1);
+			IntakeRight.set(1);
+			Timer.delay(1);}
+			
+  }
+}
 
-        		
-        
-    			FrontRight.set(-auto);
-
-    			FrontLeft.set(-auto);
-    			BackRight.set(-auto);
-    			BackLeft.set(-auto);
-
-    			Timer.delay(15);
-    			//ArmMotor.set(1);
-    			//Timer.delay(delay5);
-    			IntakeLeft.set(auto);
-    			IntakeRight.set(auto); */
-    		/*}else{
-    			FrontRight.set(auto);
-    			FrontLeft.set(auto);
-    			BackRight.set(auto);
-    			BackLeft.set(auto);
-    			Timer.delay(delay0*2);
-    			FrontRight.set(-auto);
-    			FrontLeft.set(auto);
-    			BackRight.set(-auto);
-    			BackLeft.set(auto);
-    			Timer.delay(delay1);
-    			FrontRight.set(auto);
-    			FrontLeft.set(auto);
-    			BackRight.set(auto);
-    			BackLeft.set(auto);
-    			Timer.delay(delay0*4);
-    			FrontRight.set(-auto);
-    			FrontLeft.set(auto);
-    			BackRight.set(-auto);
-    			BackLeft.set(auto);
-    			Timer.delay(delay1);
-    			FrontRight.set(auto);
-    			FrontLeft.set(auto);
-    			BackRight.set(auto);
-    			BackLeft.set(auto);
-    			Timer.delay(delay5);
-    			FrontRight.set(-auto);
-    			FrontLeft.set(auto);
-    			BackRight.set(-auto);
-    			BackLeft.set(auto);
-    			Timer.delay(delay1);
-    			ArmMotor.set(1);
-    			Timer.delay(delay5);
-    			IntakeLeft.set(auto);
-    			IntakeRight.set(auto);}
-    }*/
+   */
 
     		
     			
