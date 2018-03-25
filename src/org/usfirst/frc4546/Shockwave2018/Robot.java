@@ -45,6 +45,7 @@ public class Robot extends TimedRobot {
 
     Command autonomousCommand;
     SendableChooser<Command> chooser = new SendableChooser<>();
+
     
     private static final int kPDP = 0;
 	//private AnalogInput ai;
@@ -145,6 +146,7 @@ public class Robot extends TimedRobot {
 	double AMSlideVal;
 	double SMSlideVal;
 	
+
 	
 	
     /**
@@ -207,6 +209,7 @@ public class Robot extends TimedRobot {
     	Xbox = new XboxController(1);
     	
     	
+    	
     }
 
     /**
@@ -238,6 +241,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+
       
         
         if (autot < 1){
@@ -255,15 +259,22 @@ public class Robot extends TimedRobot {
         }
         
         autot++;
+    }
    	//gameData = DriverStation.getInstance().getGameSpecificMessage();
     	
     	//if(gameData.length() > 0){
     		//if(gameData.charAt(0) == 'L'){
     		
     			/*FrontRight.set(-auto);
+
+        		
+        
+    			FrontRight.set(-auto);
+
     			FrontLeft.set(-auto);
     			BackRight.set(-auto);
     			BackLeft.set(-auto);
+
     			Timer.delay(15);
     			//ArmMotor.set(1);
     			//Timer.delay(delay5);
@@ -305,7 +316,12 @@ public class Robot extends TimedRobot {
     			IntakeLeft.set(auto);
     			IntakeRight.set(auto);}
     }*/
-   }
+
+    		
+    			
+    			
+    			
+
 
     @Override
     public void teleopInit() {
