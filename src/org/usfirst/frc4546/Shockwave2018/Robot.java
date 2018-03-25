@@ -45,6 +45,7 @@ public class Robot extends TimedRobot {
 
     Command autonomousCommand;
     SendableChooser<Command> chooser = new SendableChooser<>();
+
     
     private static final int kPDP = 0;
 	//private AnalogInput ai;
@@ -114,17 +115,13 @@ public class Robot extends TimedRobot {
     private double RightY2;
     private boolean XboxBump;
     
+    private int autoselection;
+    private int Left;
+    private int Center;
+    private int Right;
+    private int Diable;
+    
 	private double auto = 0.5;
-	private double delay1 = 0.1;
-	private double delay2 = 0.2;
-	private double delay3 = 0.3;
-	private double delay4 = 0.4;
-	private double delay5 = 0.5;
-	private double delay6 = 0.6;
-	private double delay7 = 0.7;
-	private double delay8 = 0.8;
-	private double delay9 = 0.9;
-	private double delay0 = 1;
 	
 	private double Turn = .2;
 	
@@ -145,6 +142,7 @@ public class Robot extends TimedRobot {
 	double AMSlideVal;
 	double SMSlideVal;
 	
+
 	
 	
     /**
@@ -207,6 +205,7 @@ public class Robot extends TimedRobot {
     	Xbox = new XboxController(1);
     	
     	
+    	
     }
 
     /**
@@ -238,36 +237,203 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();      
-        /*if(autoselection == Disable){
-
+        if(autoselection == Disable){
+        	FrontRight.set(0);
+        	FrontLeft.set(0);
+        	BackRight.set(0);
+        	BackLeft.set(0);
         }
         if(autoselection == Left){						//Left
         	if(gameData.length() > 0){
         		if(gameData.charAt(0) == 'L'){			//Target Left
-        			
+        			FrontRight.set(-auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(2.3);
+        			SlideMotor.set(1);
+            		Timer.delay(2);
+        			FrontRight.set(auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(1);
+        			IntakeLeft.set(-1);
+        			IntakeRight.set(1);
+        			Timer.delay(1);
         		} else if(gameData.charAt(0) == 'R'){	//Target Right
-        			
+        			FrontRight.set(-auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(2.75);	
+            		FrontRight.set(auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(1);	
+            		FrontRight.set(-auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(2.9);		
+            		FrontRight.set(auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(1);
+        			FrontRight.set(-auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(0.75);
+        			SlideMotor.set(1);
+        			Timer.delay(1);
+        			FrontRight.set(auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(1);
+        			IntakeLeft.set(-1);
+        			IntakeRight.set(1);
+        			Timer.delay(1);
+        			}
         		}
-            }
         }else if(autoselection == Center){				//Center
         	if(gameData.length() > 0){
         		if(gameData.charAt(0) == 'L'){			//Target Left
-        			
+        			FrontRight.set(-auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(1.35);	
+        			FrontRight.set(auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(1);
+        			FrontRight.set(-auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(1.2);
+        			FrontRight.set(auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(1);
+        			FrontRight.set(-auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(0.5);
+        			SlideMotor.set(1);
+        			Timer.delay(2);
+        			FrontRight.set(auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(1);
+        			IntakeLeft.set(1);
+        			IntakeRight.set(1);
+        			Timer.delay(1);
         		} else if(gameData.charAt(0) == 'R'){	//Target Right
-        			
+        			FrontRight.set(-auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(1.35);	
+        			FrontRight.set(-auto * .85);
+        			FrontLeft.set(auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(auto);
+        			Timer.delay(1);
+        			FrontRight.set(-auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(1.45);
+        			FrontRight.set(-auto * .85);
+        			FrontLeft.set(auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(auto);
+        			Timer.delay(1);
+        			FrontRight.set(-auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(0.5);
+        			SlideMotor.set(1);
+        			Timer.delay(2);
+        			FrontRight.set(-auto * .85);
+        			FrontLeft.set(auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(auto);
+        			Timer.delay(1);
+        			IntakeLeft.set(1);
+        			IntakeRight.set(1);
+        			Timer.delay(1);
         		}
             }
         }else if(autoselection == Right){				//Right
         	if(gameData.length() > 0){
         		if(gameData.charAt(0) == 'L'){			//Target Left
-        			
+        			FrontRight.set(-auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(2.3);
+        			SlideMotor.set(1);
+            		Timer.delay(2);
+        			FrontRight.set(-auto * .85);
+        			FrontLeft.set(auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(auto);
+        			Timer.delay(1);
+        			IntakeLeft.set(-1);
+        			IntakeRight.set(1);
+        			Timer.delay(1);
         		} else if(gameData.charAt(0) == 'R'){	//Target Right
-        			
+        			FrontRight.set(-auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(2.75);	
+            		FrontRight.set(-auto * .85);
+        			FrontLeft.set(auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(auto);
+        			Timer.delay(1);	
+            		FrontRight.set(-auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(2.9);		
+            		FrontRight.set(-auto * .85);
+        			FrontLeft.set(auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(auto);
+        			Timer.delay(1);
+        			FrontRight.set(-auto * .85);
+        			FrontLeft.set(-auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(-auto);
+        			Timer.delay(0.75);
+        			SlideMotor.set(1);
+        			Timer.delay(1);
+        			FrontRight.set(-auto * .85);
+        			FrontLeft.set(auto);
+        			BackRight.set(-auto * .85);
+        			BackLeft.set(auto);
+        			Timer.delay(1);
+        			IntakeLeft.set(-1);
+        			IntakeRight.set(1);
+        			Timer.delay(1);
         		}
             }
-        }*/
-        
-        if (autot < 1){
+        }
+
+        /*if (autot < 1){
         	FrontRight.set(-auto * .85);
 			FrontLeft.set(-auto);
 			BackRight.set(-auto * .85);
@@ -281,58 +447,8 @@ public class Robot extends TimedRobot {
 		BackLeft.set(0);
         }
         
-        autot++;
-   	//gameData = DriverStation.getInstance().getGameSpecificMessage();
-    	
-    	//if(gameData.length() > 0){
-    		//if(gameData.charAt(0) == 'L'){
-    		
-    			/*FrontRight.set(-auto);
-    			FrontLeft.set(-auto);
-    			BackRight.set(-auto);
-    			BackLeft.set(-auto);
-    			Timer.delay(15);
-    			//ArmMotor.set(1);
-    			//Timer.delay(delay5);
-    			IntakeLeft.set(auto);
-    			IntakeRight.set(auto); */
-    		/*}else{
-    			FrontRight.set(auto);
-    			FrontLeft.set(auto);
-    			BackRight.set(auto);
-    			BackLeft.set(auto);
-    			Timer.delay(delay0*2);
-    			FrontRight.set(-auto);
-    			FrontLeft.set(auto);
-    			BackRight.set(-auto);
-    			BackLeft.set(auto);
-    			Timer.delay(delay1);
-    			FrontRight.set(auto);
-    			FrontLeft.set(auto);
-    			BackRight.set(auto);
-    			BackLeft.set(auto);
-    			Timer.delay(delay0*4);
-    			FrontRight.set(-auto);
-    			FrontLeft.set(auto);
-    			BackRight.set(-auto);
-    			BackLeft.set(auto);
-    			Timer.delay(delay1);
-    			FrontRight.set(auto);
-    			FrontLeft.set(auto);
-    			BackRight.set(auto);
-    			BackLeft.set(auto);
-    			Timer.delay(delay5);
-    			FrontRight.set(-auto);
-    			FrontLeft.set(auto);
-    			BackRight.set(-auto);
-    			BackLeft.set(auto);
-    			Timer.delay(delay1);
-    			ArmMotor.set(1);
-    			Timer.delay(delay5);
-    			IntakeLeft.set(auto);
-    			IntakeRight.set(auto);}
-    }*/
-   }
+        autot++;*/
+    }
 
     @Override
     public void teleopInit() {
