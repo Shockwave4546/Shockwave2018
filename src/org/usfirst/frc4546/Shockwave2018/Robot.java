@@ -237,8 +237,38 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
-      
+        Scheduler.getInstance().run();      
+        if(autoselection == Disable){
+        	FrontRight.set(0);
+    		FrontLeft.set(0);
+    		BackRight.set(0);
+    		BackLeft.set(0);
+        }
+        if(autoselection == Left){						//Left
+        	if(gameData.length() > 0){
+        		if(gameData.charAt(0) == 'L'){			//Target Left
+        			
+        		} else if(gameData.charAt(0) == 'R'){	//Target Right
+        			
+        		}
+            }
+        }else if(autoselection == Center){				//Center
+        	if(gameData.length() > 0){
+        		if(gameData.charAt(0) == 'L'){			//Target Left
+        			
+        		} else if(gameData.charAt(0) == 'R'){	//Target Right
+        			
+        		}
+            }
+        }else if(autoselection == Right){				//Right
+        	if(gameData.length() > 0){
+        		if(gameData.charAt(0) == 'L'){			//Target Left
+        			
+        		} else if(gameData.charAt(0) == 'R'){	//Target Right
+        			
+        		}
+            }
+        }
         
         if (autot < 1){
         	FrontRight.set(-auto * .85);
@@ -525,7 +555,7 @@ public class Robot extends TimedRobot {
 				SmartDashboard.putString("LeftIntake", "Neutral");
 				SmartDashboard.putString("RightIntake", "Neutral");
 				// Intake motor idle
-			} else if ((Button == true || XboxBump == true)&& Trigger == false) {
+			} else if ((Button == true || XboxBump == true)||(Button == true && XboxBump == true)&& Trigger == false) {
 				FinalIntakeLeft = (IntakeLeftPos);
 				FinalIntakeRight = (-IntakeRightNeg);
 				SmartDashboard.putString("LeftIntake", "OUT");
