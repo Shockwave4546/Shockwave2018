@@ -232,6 +232,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		switch (Robot.autonomousPosition.getSelected().getString()) {
 		case "Left":
 			autoselection = "Left";
