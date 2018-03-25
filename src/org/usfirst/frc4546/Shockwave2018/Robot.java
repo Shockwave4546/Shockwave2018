@@ -26,7 +26,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -41,7 +40,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * creating this project, you must also update the build.properties file in the
  * project.
  */
-public class Robot extends IterativeRobot {
+public class Robot extends TimedRobot {
 	public static SendableChooser<AutoPosition> autonomousPosition;
 	public AutoPosition Left, Center, Right, Disable;
 
@@ -168,7 +167,7 @@ public class Robot extends IterativeRobot {
 
 		/* The Position Position */
 		autonomousPosition = new SendableChooser<AutoPosition>();
-		autonomousPosition.addDefault("None", Disable);
+		autonomousPosition.addDefault("Disable", Disable);
 		autonomousPosition.addObject("Left", Left);
 		autonomousPosition.addObject("Center", Center);
 		autonomousPosition.addObject("Right", Right);
