@@ -297,12 +297,19 @@ public class Robot extends TimedRobot {
 						IntakeLeft.set(1);
 						IntakeRight.set(-1);
 						Timer.delay(1);
+						IntakeLeft.set(0);
+						IntakeRight.set(0);
+						Timer.delay(1);
 					} else if (gameData.charAt(0) == 'R') { // Target Right
 						FrontRight.set(-auto * .76);
 						FrontLeft.set(-auto);
 						BackLeft.set(-auto);
 						BackRight.set(-auto * .76);
-						Timer.delay(2.25);
+						Timer.delay(3.3);
+						FrontRight.set(0);
+						FrontLeft.set(0);
+						BackLeft.set(0);
+						BackRight.set(0);
 					}
 				}
 			} else if (autoselection == "Center") { // Center
@@ -328,15 +335,19 @@ public class Robot extends TimedRobot {
 						FrontLeft.set(-auto);
 						BackLeft.set(-auto);
 						BackRight.set(-auto * .76);
-						Timer.delay(2.25);
+						Timer.delay(3.3);
+						FrontRight.set(0);
+						FrontLeft.set(0);
+						BackLeft.set(0);
+						BackRight.set(0);
 
 					} else if (gameData.charAt(0) == 'R') { // Target Right
 						SlideMotor.set(1);
 						Timer.delay(1.5);
-						FrontRight.set(-auto * .76);
+						FrontRight.set(-auto * .765);
 						FrontLeft.set(-auto);
 						BackLeft.set(-auto);
-						BackRight.set(-auto * .76);
+						BackRight.set(-auto * .765);
 						SlideMotor.set(0);
 						Timer.delay(2.25);
 						FrontRight.set(0);
@@ -366,6 +377,9 @@ public class Robot extends TimedRobot {
 						BackRight.set(0);
 						IntakeLeft.set(1);
 						IntakeRight.set(-1);
+						Timer.delay(1);
+						IntakeLeft.set(0);
+						IntakeRight.set(0);
 						Timer.delay(1);
 					}
 				} else {
