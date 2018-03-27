@@ -232,6 +232,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		switch (Robot.autonomousPosition.getSelected().getString()) {
 		case "Left":
@@ -260,205 +261,130 @@ public class Robot extends TimedRobot {
 				System.out.println("Left");
 				if (gameData.length() > 0) {
 					if (gameData.charAt(0) == 'L') { // Target Left
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(2.3);
 						SlideMotor.set(1);
-						Timer.delay(2);
-						FrontRight.set(auto * .85);
+						Timer.delay(1.5);
+						FrontRight.set(-auto * .76);
 						FrontLeft.set(-auto);
-						BackRight.set(auto * .85);
 						BackLeft.set(-auto);
-						Timer.delay(1);
-						IntakeLeft.set(-1);
-						IntakeRight.set(1);
+						BackRight.set(-auto * .76);
+						SlideMotor.set(0);
+						Timer.delay(2.25);
+						FrontRight.set(0);
+						FrontLeft.set(0);
+						BackLeft.set(0);
+						BackRight.set(0);
+						IntakeLeft.set(0);
+						IntakeRight.set(0);
+						Timer.delay(1.4);
+						FrontRight.set(auto * .76);
+						FrontLeft.set(-auto);
+						BackLeft.set(-auto);
+						BackRight.set(auto * .76);
+						IntakeLeft.set(0);
+						IntakeRight.set(0);
+						Timer.delay(2);
+						FrontRight.set(-auto * .76);
+						FrontLeft.set(-auto);
+						BackLeft.set(-auto);
+						BackRight.set(-auto * .76);
+						IntakeLeft.set(0);
+						IntakeRight.set(0);
+						Timer.delay(0.3);
+						FrontRight.set(0);
+						FrontLeft.set(0);
+						BackLeft.set(0);
+						BackRight.set(0);
+						IntakeLeft.set(1);
+						IntakeRight.set(-1);
 						Timer.delay(1);
 					} else if (gameData.charAt(0) == 'R') { // Target Right
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(2.75);
-						FrontRight.set(auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(1);
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(2.9);
-						FrontRight.set(auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(1);
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(0.75);
-						SlideMotor.set(1);
-						Timer.delay(1);
-						FrontRight.set(auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(1);
-						IntakeLeft.set(-1);
-						IntakeRight.set(1);
-						Timer.delay(1);
+						FrontRight.set(0);
+						FrontLeft.set(0);
+						BackRight.set(0);
+						BackLeft.set(0);
 					}
 				}
 			} else if (autoselection == "Center") { // Center
 				System.out.println("Center");
 				if (gameData.length() > 0) {
 					if (gameData.charAt(0) == 'L') { // Target Left
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(1.35);
-						FrontRight.set(auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(1);
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(1.2);
-						FrontRight.set(auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(1);
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(0.5);
-						SlideMotor.set(1);
-						Timer.delay(2);
-						FrontRight.set(auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(1);
-						IntakeLeft.set(1);
-						IntakeRight.set(1);
-						Timer.delay(1);
+						FrontRight.set(0);
+						FrontLeft.set(0);
+						BackRight.set(0);
+						BackLeft.set(0);
 					} else if (gameData.charAt(0) == 'R') { // Target Right
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(1.35);
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(auto);
-						Timer.delay(1);
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(1.45);
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(auto);
-						Timer.delay(1);
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(0.5);
-						SlideMotor.set(1);
-						Timer.delay(2);
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(auto);
-						Timer.delay(1);
-						IntakeLeft.set(1);
-						IntakeRight.set(1);
-						Timer.delay(1);
+						FrontRight.set(0);
+						FrontLeft.set(0);
+						BackRight.set(0);
+						BackLeft.set(0);
 					}
 				}
 			} else if (autoselection == "Right") { // Right
 				System.out.println("Right");
 				if (gameData.length() > 0) {
 					if (gameData.charAt(0) == 'L') { // Target Left
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(2.3);
-						SlideMotor.set(1);
-						Timer.delay(2);
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(auto);
-						Timer.delay(1);
-						IntakeLeft.set(-1);
-						IntakeRight.set(1);
-						Timer.delay(1);
+						FrontRight.set(0);
+						FrontLeft.set(0);
+						BackRight.set(0);
+						BackLeft.set(0);
+
 					} else if (gameData.charAt(0) == 'R') { // Target Right
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(2.75);
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(auto);
-						Timer.delay(1);
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(2.9);
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(auto);
-						Timer.delay(1);
-						FrontRight.set(-auto * .85);
-						FrontLeft.set(-auto);
-						BackRight.set(-auto * .85);
-						BackLeft.set(-auto);
-						Timer.delay(0.75);
 						SlideMotor.set(1);
-						Timer.delay(1);
-						FrontRight.set(-auto * .85);
+						Timer.delay(1.5);
+						FrontRight.set(-auto * .76);
+						FrontLeft.set(-auto);
+						BackLeft.set(-auto);
+						BackRight.set(-auto * .76);
+						SlideMotor.set(0);
+						Timer.delay(2.25);
+						FrontRight.set(0);
+						FrontLeft.set(0);
+						BackLeft.set(0);
+						BackRight.set(0);
+						IntakeLeft.set(0);
+						IntakeRight.set(0);
+						Timer.delay(1.4);
+						FrontRight.set(-auto * .76);
 						FrontLeft.set(auto);
-						BackRight.set(-auto * .85);
 						BackLeft.set(auto);
-						Timer.delay(1);
-						IntakeLeft.set(-1);
-						IntakeRight.set(1);
+						BackRight.set(-auto * .76);
+						IntakeLeft.set(0);
+						IntakeRight.set(0);
+						Timer.delay(2);
+						FrontRight.set(-auto * .76);
+						FrontLeft.set(-auto);
+						BackLeft.set(-auto);
+						BackRight.set(-auto * .76);
+						IntakeLeft.set(0);
+						IntakeRight.set(0);
+						Timer.delay(0.3);
+						FrontRight.set(0);
+						FrontLeft.set(0);
+						BackLeft.set(0);
+						BackRight.set(0);
+						IntakeLeft.set(1);
+						IntakeRight.set(-1);
 						Timer.delay(1);
 					}
+				} else {
+					FrontRight.set(0);
+					FrontLeft.set(0);
+					BackRight.set(0);
+					BackLeft.set(0);
 				}
+
 			}
+			autot++;
 		}
-		autot++;
-		/*
-		 * if (autot < 1){ FrontRight.set(-auto * .85); FrontLeft.set(-auto);
-		 * BackRight.set(-auto * .85); BackLeft.set(-auto); Timer.delay(4); }
-		 * else{ FrontRight.set(0); FrontLeft.set(0); BackRight.set(0);
-		 * BackLeft.set(0); }
-		 * 
-		 * autot++;
-		 */
 	}
+
+	/*
+	 * if (autot < 1){ FrontRight.set(-auto * .85); FrontLeft.set(-auto);
+	 * BackRight.set(-auto * .85); BackLeft.set(-auto); Timer.delay(4); } else{
+	 * FrontRight.set(0); FrontLeft.set(0); BackRight.set(0); BackLeft.set(0); }
+	 * 
+	 * autot++;
+	 */
 
 	@Override
 	public void teleopInit() {

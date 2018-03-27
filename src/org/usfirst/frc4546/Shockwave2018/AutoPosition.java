@@ -3,9 +3,6 @@ package org.usfirst.frc4546.Shockwave2018;
 public class AutoPosition {
 	private int n;
 
-	/**
-	 * Takes an integer when setting and that int will correspond to a string
-	 */
 	public AutoPosition(int v) {
 		n = v;
 	}
