@@ -298,10 +298,11 @@ public class Robot extends TimedRobot {
 						IntakeRight.set(-1);
 						Timer.delay(1);
 					} else if (gameData.charAt(0) == 'R') { // Target Right
-						FrontRight.set(0);
-						FrontLeft.set(0);
-						BackRight.set(0);
-						BackLeft.set(0);
+						FrontRight.set(-auto * .76);
+						FrontLeft.set(-auto);
+						BackLeft.set(-auto);
+						BackRight.set(-auto * .76);
+						Timer.delay(2.25);
 					}
 				}
 			} else if (autoselection == "Center") { // Center
@@ -323,10 +324,11 @@ public class Robot extends TimedRobot {
 				System.out.println("Right");
 				if (gameData.length() > 0) {
 					if (gameData.charAt(0) == 'L') { // Target Left
-						FrontRight.set(0);
-						FrontLeft.set(0);
-						BackRight.set(0);
-						BackLeft.set(0);
+						FrontRight.set(-auto * .76);
+						FrontLeft.set(-auto);
+						BackLeft.set(-auto);
+						BackRight.set(-auto * .76);
+						Timer.delay(2.25);
 
 					} else if (gameData.charAt(0) == 'R') { // Target Right
 						SlideMotor.set(1);
